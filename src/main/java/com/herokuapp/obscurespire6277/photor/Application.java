@@ -1,5 +1,6 @@
 package com.herokuapp.obscurespire6277.photor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -8,6 +9,10 @@ import java.util.Arrays;
 
 @SpringBootApplication
 public class Application {
+
+    @Autowired
+    FooRepository _fooRepository;
+
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(Application.class, args);
