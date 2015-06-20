@@ -13,7 +13,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<start-class>com.herokuapp.obscurespire6277.photor.Application</start-class>
 		<java.version>1.8</java.version>
 	</properties>
 
@@ -25,13 +24,55 @@
         </dependency>
 	</dependencies>
 
+<!-- For dep management, see Mykong.com's "How to create a jar file with Maven" -->
 	<build>
 		<plugins>
-			<plugin>
+            <!-- Necessary to force language level of Java 8 -->
+		    <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-			</plugin>
+                <version>3.2</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <!-- Packages into a jar, looking for deps in target/dependency-jars -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>com.herokuapp.obscurespire6277.photor.Application</mainClass>
+                            <classpathPrefix>dependency-jars</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- Moves all compiled deps to target/dependency-jars -->
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+                <version>2.5.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeScope>runtime</includeScope>
+                            <outputDirectory>${project.build.directory}/dependency-jars</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+		    </plugin>
 		</plugins>
 	</build>
 </project>
