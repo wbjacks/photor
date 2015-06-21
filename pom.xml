@@ -17,10 +17,18 @@
 	</properties>
 
 	<dependencies>
+        <!-- Controller -->
         <dependency>
             <groupId>com.sparkjava</groupId>
             <artifactId>spark-core</artifactId>
             <version>2.2</version>
+        </dependency>
+
+        <!-- IOC -->
+        <dependency>
+            <groupId>org.jodd</groupId>
+            <artifactId>jodd-petite</artifactId>
+            <version>3.5.2</version>
         </dependency>
 	</dependencies>
 
