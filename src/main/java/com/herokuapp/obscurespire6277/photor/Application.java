@@ -5,6 +5,9 @@ import static spark.Spark.*;
 
 public class Application {
     public static void main(String[] args) {
+        if (args.length == 1) {
+            port(Integer.valueOf(args[0]));
+        }
         PetiteContainer petiteContainer = new PetiteContainer();
         petiteContainer.registerPetiteBean(FooService.class, null, null, null, false);
         petiteContainer.registerPetiteBean(BarService.class, null, null, null, false);
