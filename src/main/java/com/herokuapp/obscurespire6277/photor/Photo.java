@@ -1,9 +1,8 @@
 package com.herokuapp.obscurespire6277.photor;
 
-import org.joda.time.DateTime;
-
 import javax.persistence.*;
 import java.sql.Blob;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +23,7 @@ public class Photo {
     private User user;
 
     @Column(name = "created_at", nullable = false)
-    private DateTime createdAt;
+    private ZonedDateTime createdAt;
 
     @Column(name = "latitude", nullable = false)
     private double latitude;
@@ -50,7 +49,7 @@ public class Photo {
 
     public Photo() { /* hibernate */ }
 
-    public Photo(User user, DateTime createdAt, String caption) {
+    public Photo(User user, ZonedDateTime createdAt, String caption) {
         this.user = user;
         this.createdAt = createdAt;
         this.caption = caption;
@@ -64,7 +63,7 @@ public class Photo {
         return user;
     }
 
-    public DateTime getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 

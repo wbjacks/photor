@@ -1,9 +1,9 @@
 package com.herokuapp.obscurespire6277.photor;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "likes")
@@ -15,7 +15,7 @@ public class Like {
     private Long id;
 
     @Column(name = "created_at", nullable = false)
-    private DateTime createdAt;
+    private ZonedDateTime createdAt;
 
     @OneToOne
     private LogIn login;
@@ -30,7 +30,7 @@ public class Like {
         return id;
     }
 
-    public DateTime getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 

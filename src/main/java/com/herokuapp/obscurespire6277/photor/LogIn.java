@@ -1,9 +1,9 @@
 package com.herokuapp.obscurespire6277.photor;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Entity
@@ -16,7 +16,7 @@ public class LogIn {
     private Long id;
 
     @Column(name = "when", nullable = false)
-    private DateTime when;
+    private ZonedDateTime when;
 
     @Column(name = "longitude", nullable = true)
     private double longitude;
@@ -31,7 +31,7 @@ public class LogIn {
         return id;
     }
 
-    public DateTime getWhen() {
+    public ZonedDateTime getWhen() {
         return when;
     }
 

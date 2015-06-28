@@ -1,9 +1,9 @@
 package com.herokuapp.obscurespire6277.photor;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,19 +20,19 @@ public class User {
     @GenericGenerator(name="increment", strategy="increment")
     private Long id;
 
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name = "handle")
+    @Column(name = "handle", nullable = false)
     private String handle;
 
-    @Column(name = "created_at")
-    private DateTime createdAt;
+    @Column(name = "created_at", nullable = false)
+    private ZonedDateTime createdAt;
 
-    @OneToMany(mappedBy = "user")
+    @Column(name = "first_name", nullable = true)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = true)
+    private String lastName;
+
+    @OneToMany(mappedBy = "user", cascade = PERSIST, fetch = LAZY)
     private List<LogIn> logins = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = PERSIST, fetch = LAZY)
@@ -46,8 +46,21 @@ public class User {
 
     public User() { /* hibernate */ }
 
+    public User(String handle, ZonedDateTime createdAt) {
+        this.handle = handle;
+        this.createdAt = createdAt;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public String getHandle() {
+        return handle;
+    }
+
+    public ZonedDateTime getCreatedAt() {
+        return createdAt;
     }
 
     public Optional<String> getFirstName() {
@@ -56,14 +69,6 @@ public class User {
 
     public Optional<String> getLastName() {
         return Optional.ofNullable(lastName);
-    }
-
-    public String getHandle() {
-        return handle;
-    }
-
-    public DateTime getCreatedAt() {
-        return createdAt;
     }
 
     public List<LogIn> getLogins() {

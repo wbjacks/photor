@@ -1,10 +1,10 @@
 package com.herokuapp.obscurespire6277.photor;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.time.DateTimeException;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "comments")
@@ -16,7 +16,7 @@ public class Comment {
     private Long id;
 
     @Column(name = "created_at")
-    private DateTime createdAt;
+    private ZonedDateTime createdAt;
 
     @OneToOne
     private LogIn login;
@@ -31,7 +31,7 @@ public class Comment {
         return id;
     }
 
-    public DateTime getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 

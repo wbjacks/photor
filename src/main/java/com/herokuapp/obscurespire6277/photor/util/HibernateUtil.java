@@ -10,14 +10,6 @@ public class HibernateUtil {
 
     private static SessionFactory sessionFactory = buildSessionFactory();
 
-    private static Class[] ENTITIES = new Class[] {
-            User.class,
-            Photo.class,
-            Like.class,
-            Comment.class,
-            LogIn.class,
-    };
-
     private static SessionFactory buildSessionFactory() {
         if (sessionFactory == null)
         {
