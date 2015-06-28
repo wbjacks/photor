@@ -20,41 +20,31 @@ public class User {
     @GenericGenerator(name="increment", strategy="increment")
     private Long id;
 
-    @Column(name = "first_name", nullable = true)
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name", nullable = true)
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "handle", unique = true, nullable = false)
+    @Column(name = "handle")
     private String handle;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private DateTime createdAt;
 
-    @Column(name = "last_login", nullable = true)
-    private LogIn lastLogin;
-
-    @OneToMany(mappedBy = "users", cascade = PERSIST, fetch = LAZY)
+    @OneToMany(mappedBy = "user")
     private List<LogIn> logins = new ArrayList<>();
 
-    @OneToMany(mappedBy = "users", cascade = PERSIST, fetch = LAZY)
+    @OneToMany(mappedBy = "user", cascade = PERSIST, fetch = LAZY)
     private List<Photo> photos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "users", cascade = PERSIST, fetch = LAZY)
+    @OneToMany(mappedBy = "user", cascade = PERSIST, fetch = LAZY)
     private List<Like> likes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "users", cascade = PERSIST, fetch = LAZY)
+    @OneToMany(mappedBy = "user", cascade = PERSIST, fetch = LAZY)
     private List<Comment> comments = new ArrayList<>();
 
     public User() { /* hibernate */ }
-
-    public User(String firstName, String lastName, String handle, List<Photo> photos) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.handle = handle;
-        this.photos = photos;
-    }
 
     public Long getId() {
         return id;
@@ -74,10 +64,6 @@ public class User {
 
     public DateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public Optional<LogIn> getLastLogin() {
-        return Optional.ofNullable(lastLogin);
     }
 
     public List<LogIn> getLogins() {

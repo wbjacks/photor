@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Collections.EMPTY_LIST;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.FetchType.EAGER;
 
@@ -22,7 +21,6 @@ public class Photo {
     private Long id;
 
     @ManyToOne
-    @Column(name = "user_id", nullable = false)
     private User user;
 
     @Column(name = "created_at", nullable = false)
@@ -40,27 +38,22 @@ public class Photo {
     @Column(name = "photo_blob", nullable = false)
     private Blob photoBlob;
 
-    @Column(name = "hash_tags", nullable = true)
-    private List<String> hashTags;
-
     @OneToOne
-    @Column(name = "login_id")
     private LogIn login;
 
-    @OneToMany(mappedBy = "photos", cascade = PERSIST, fetch = EAGER)
+    @OneToMany(mappedBy = "photo", cascade = PERSIST, fetch = EAGER)
     private List<Like> likes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "photos", cascade = PERSIST, fetch = EAGER)
+    @OneToMany(mappedBy = "photo", cascade = PERSIST, fetch = EAGER)
     private List<Comment> comments = new ArrayList<>();
 
 
     public Photo() { /* hibernate */ }
 
-    public Photo(User user, DateTime createdAt, String caption, List<String> hashTags) {
+    public Photo(User user, DateTime createdAt, String caption) {
         this.user = user;
         this.createdAt = createdAt;
         this.caption = caption;
-        this.hashTags = hashTags;
     }
 
     public Long getId() {
@@ -91,10 +84,6 @@ public class Photo {
         return photoBlob;
     }
 
-    public List<String> getHashTags() {
-        return hashTags != null ? hashTags : EMPTY_LIST;
-    }
-
     public LogIn getLogin() {
         return login;
     }
@@ -106,5 +95,5 @@ public class Photo {
     public List<Comment> getComments() {
         return comments;
     }
-    
+
 }

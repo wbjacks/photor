@@ -18,15 +18,12 @@ public class Like {
     private DateTime createdAt;
 
     @OneToOne
-    @Column(name = "login_id", nullable = false)
     private LogIn login;
 
     @ManyToOne
-    @Column(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @Column(name = "photo_id", nullable = false)
     private Photo photo;
 
     public Long getId() {

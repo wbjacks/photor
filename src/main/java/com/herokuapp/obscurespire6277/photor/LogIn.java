@@ -25,7 +25,6 @@ public class LogIn {
     private double latitude;
 
     @ManyToOne
-    @Column(name = "user_id", nullable = false)
     private User user;
 
     public Long getId() {

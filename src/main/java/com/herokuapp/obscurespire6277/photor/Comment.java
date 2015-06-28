@@ -19,15 +19,12 @@ public class Comment {
     private DateTime createdAt;
 
     @OneToOne
-    @Column(name = "login_id")
     private LogIn login;
 
     @ManyToOne
-    @Column(name = "user_id")
     private User user;
 
     @ManyToOne
-    @Column(name = "photo_id")
     private Photo photo;
 
     public Long getId() {
