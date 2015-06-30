@@ -1,6 +1,6 @@
 package com.herokuapp.obscurespire6277.photor.platform.hibernate;
 
-import com.herokuapp.obscurespire6277.photor.*;
+import com.herokuapp.obscurespire6277.photor.entities.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -25,6 +25,7 @@ public class HibernateUtil {
             ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         }
+
         return sessionFactory;
     }
 

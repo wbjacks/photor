@@ -1,4 +1,4 @@
-package com.herokuapp.obscurespire6277.photor;
+package com.herokuapp.obscurespire6277.photor.entities;
 
 import javax.persistence.*;
 import java.sql.Blob;

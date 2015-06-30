@@ -1,4 +1,4 @@
-package com.herokuapp.obscurespire6277.photor;
+package com.herokuapp.obscurespire6277.photor.entities;
 
 import org.hibernate.annotations.GenericGenerator;
 

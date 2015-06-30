@@ -1,9 +1,11 @@
-package com.herokuapp.obscurespire6277.photor;
+package com.herokuapp.obscurespire6277.photor.entities;
 
+import com.herokuapp.obscurespire6277.photor.entities.LogIn;
+import com.herokuapp.obscurespire6277.photor.entities.Photo;
+import com.herokuapp.obscurespire6277.photor.entities.User;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.DateTimeException;
 import java.time.ZonedDateTime;
 
 @Entity
