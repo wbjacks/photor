@@ -49,10 +49,26 @@ public class Photo {
 
     public Photo() { /* hibernate */ }
 
-    public Photo(User user, ZonedDateTime createdAt, String caption) {
-        this.user = user;
+    public Photo(ZonedDateTime createdAt, String caption, Blob photoBlob, LogIn login) {
         this.createdAt = createdAt;
         this.caption = caption;
+        this.photoBlob = photoBlob;
+        this.login = login;
+    }
+
+    /* for use by User#addPhoto and tests ONLY */
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void addLike(Like like) {
+        this.likes.add(like);
+        like.setPhoto(this);
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setPhoto(this);
     }
 
     public Long getId() {

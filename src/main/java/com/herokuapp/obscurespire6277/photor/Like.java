@@ -26,6 +26,23 @@ public class Like {
     @ManyToOne
     private Photo photo;
 
+    public Like() { /* hibernate */ }
+
+    public Like(ZonedDateTime createdAt, LogIn login) {
+        this.createdAt = createdAt;
+        this.login = login;
+    }
+
+    // for use by User#addLike and tests ONLY
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    // for use by User#addPhoto and tests ONLY
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
+
     public Long getId() {
         return id;
     }

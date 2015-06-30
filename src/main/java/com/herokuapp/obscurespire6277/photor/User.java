@@ -51,6 +51,26 @@ public class User {
         this.createdAt = createdAt;
     }
 
+    public void addLogIn(LogIn login) {
+        this.logins.add(login);
+        login.setUser(this);
+    }
+
+    public void addPhoto(Photo photo) {
+        this.photos.add(photo);
+        photo.setUser(this);
+    }
+
+    public void addLike(Like like) {
+        this.likes.add(like);
+        like.setUser(this);
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setUser(this);
+    }
+
     public Long getId() {
         return id;
     }

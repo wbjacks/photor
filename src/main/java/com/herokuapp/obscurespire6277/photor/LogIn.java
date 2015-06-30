@@ -27,6 +27,11 @@ public class LogIn {
     @ManyToOne
     private User user;
 
+    // for use by User#addLogIn and tests ONLY
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }

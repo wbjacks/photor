@@ -18,6 +18,9 @@ public class Comment {
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
 
+    @Column(name = "content")
+    private String content;
+
     @OneToOne
     private LogIn login;
 
@@ -26,6 +29,24 @@ public class Comment {
 
     @ManyToOne
     private Photo photo;
+
+    public Comment() { /* hibernate */ }
+
+    public Comment(ZonedDateTime createdAt, String content, LogIn login) {
+        this.createdAt = createdAt;
+        this.content = content;
+        this.login = login;
+    }
+
+    // for use by User#addComment and tests ONLY
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    // for use by Photo#addComment and tests ONLY
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
 
     public Long getId() {
         return id;
