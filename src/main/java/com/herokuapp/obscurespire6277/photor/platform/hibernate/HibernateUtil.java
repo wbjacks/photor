@@ -1,4 +1,4 @@
-package com.herokuapp.obscurespire6277.photor.util;
+package com.herokuapp.obscurespire6277.photor.platform.hibernate;
 
 import com.herokuapp.obscurespire6277.photor.*;
 import org.hibernate.SessionFactory;

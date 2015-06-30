@@ -6,8 +6,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
-import static com.herokuapp.obscurespire6277.photor.util.HibernateUtil.getSessionFactory;
-import static com.herokuapp.obscurespire6277.photor.util.HibernateUtil.shutdown;
+import static com.herokuapp.obscurespire6277.photor.platform.hibernate.HibernateUtil.getSessionFactory;
+import static com.herokuapp.obscurespire6277.photor.platform.hibernate.HibernateUtil.shutdown;
 
 public class PersistentTestBase {
 
