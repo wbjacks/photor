@@ -7,7 +7,7 @@ import jodd.petite.PetiteContainer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PetiteManager {
+public class ServiceManager {
     // TODO: (wjackson) this might be useful for reference, but might not
     private static final List<Class> CORE_SERVICES = new ArrayList<>();
     private static final List<Class> WEB_SERVICES = new ArrayList<>();
