@@ -19,6 +19,8 @@ public class ServiceManager {
         CORE_SERVICES.add(FooService.class);
         CORE_SERVICES.add(BarService.class);
 
+        PETITE_CONTAINER.getConfig().setDetectDuplicatedBeanNames(true);
+
         // TODO: (wbjacks) call registerServices here?
         // registerServices();
     }
