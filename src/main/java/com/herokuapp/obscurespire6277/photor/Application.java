@@ -1,17 +1,19 @@
 package com.herokuapp.obscurespire6277.photor;
 
 import jodd.petite.PetiteContainer;
-import static spark.Spark;
+import static spark.Spark.*;
 
 public class Application {
     public static void main(String[] args) {
         if (args.length == 1) {
-            Spark.port(Integer.valueOf(args[0]));
+            port(Integer.valueOf(args[0]));
         }
-        PetiteManager.registerServices();
+        PetiteContainer petiteContainer = new PetiteContainer();
+        petiteContainer.registerPetiteBean(FooService.class, null, null, null, false);
+        petiteContainer.registerPetiteBean(BarService.class, null, null, null, false);
 
-        FooService fooService = PetiteManager.getBean(FooService.class);
+        FooService fooService = (FooService)petiteContainer.getBean("fooService");
 
-        Spark.get("/", (req, resp) -> fooService.printFoo() + " " + fooService.printBar());
+        get("/", (req, resp) -> fooService.printFoo() + " " + fooService.printBar());
     }
 }
