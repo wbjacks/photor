@@ -1,7 +1,7 @@
 package com.herokuapp.obscurespire6277.photor;
 
-import jodd.petite.PetiteContainer;
-import static spark.Spark;
+import com.herokuapp.obscurespire6277.photor.util.ioc.PetiteManager;
+import spark.Spark;
 
 public class Application {
     public static void main(String[] args) {

@@ -1,4 +1,11 @@
+package com.herokuapp.obscurespire6277.photor.util.ioc;
+
+import com.herokuapp.obscurespire6277.photor.BarService;
+import com.herokuapp.obscurespire6277.photor.FooService;
 import jodd.petite.PetiteContainer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PetiteManager {
     // TODO: (wjackson) this might be useful for reference, but might not
@@ -6,7 +13,7 @@ public class PetiteManager {
     private static final List<Class> WEB_SERVICES = new ArrayList<>();
     // etc. break down by module
     
-    private static final PETITE_CONTAINER = new PetiteContainer();
+    private static final PetiteContainer PETITE_CONTAINER = new PetiteContainer();
 
     static {
         CORE_SERVICES.add(FooService.class);
@@ -16,14 +23,13 @@ public class PetiteManager {
         // registerServices();
     }
 
-    public static registerServices() {
+    public static void registerServices() {
         for (Class coreService : CORE_SERVICES) {
             PETITE_CONTAINER.registerPetiteBean(coreService, null, null, null, false);
         }
     }
 
     public static <T> T getBean(Class<T> cla$$) {
-        // TODO: (wbjacks) no idea if this will actually work...
-        return (T)_petiteContainer.getBean(cla$$.getName());
+        return PETITE_CONTAINER.getBean(cla$$);
     }
 }
