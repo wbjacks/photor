@@ -13,9 +13,8 @@ public final class ServiceManager {
     private static final List<Class> CORE_SERVICES = new ArrayList<>();
     private static final List<Class> WEB_SERVICES = new ArrayList<>();
     private static final List<Class> WEB_CONTROLLERS = new ArrayList<>();
-    // etc. break down by module
 
-    private static final PetiteContainer PETITE_CONTAINER = new PetiteContainer();
+    static final PetiteContainer PETITE_CONTAINER = new PetiteContainer();
 
     static {
         CORE_SERVICES.add(FooService.class);
@@ -24,9 +23,6 @@ public final class ServiceManager {
         WEB_CONTROLLERS.add(FooController.class);
 
         PETITE_CONTAINER.getConfig().setDetectDuplicatedBeanNames(true);
-
-        // TODO: (wbjacks) call registerServices here?
-        // registerServices();
     }
 
     private ServiceManager() {
