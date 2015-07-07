@@ -9,19 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class ServiceManager {
-    private static final List<Class> CORE_SERVICES = new ArrayList<>();
-    private static final List<Class> WEB_SERVICES = new ArrayList<>();
+    static final List<Class> CORE_SERVICES = new ArrayList<>();
+    static final List<Class> WEB_SERVICES = new ArrayList<>();
 
-    private static final PetiteContainer PETITE_CONTAINER = new PetiteContainer();
+    static final PetiteContainer PETITE_CONTAINER = new PetiteContainer();
 
     static {
         CORE_SERVICES.add(FooService.class);
         CORE_SERVICES.add(BarService.class);
 
         PETITE_CONTAINER.getConfig().setDetectDuplicatedBeanNames(true);
-
-        // TODO: (wbjacks) call registerServices here?
-        // registerServices();
     }
 
     private ServiceManager() {
