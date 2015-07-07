@@ -4,12 +4,12 @@ import com.herokuapp.obscurespire6277.photor.BarService;
 import com.herokuapp.obscurespire6277.photor.FooService;
 import com.herokuapp.obscurespire6277.photor.platform.web.controller.FooController;
 import jodd.petite.PetiteContainer;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceManager {
-    // TODO: (wjackson) this might be useful for reference, but might not
+public final class ServiceManager {
     private static final List<Class> CORE_SERVICES = new ArrayList<>();
     private static final List<Class> WEB_SERVICES = new ArrayList<>();
     private static final List<Class> WEB_CONTROLLERS = new ArrayList<>();
@@ -27,6 +27,10 @@ public class ServiceManager {
 
         // TODO: (wbjacks) call registerServices here?
         // registerServices();
+    }
+
+    private ServiceManager() {
+        throw new NotImplementedException();
     }
 
     public static void registerServices() {
