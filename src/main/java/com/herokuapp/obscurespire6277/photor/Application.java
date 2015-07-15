@@ -12,6 +12,6 @@ public class Application {
 
         FooService fooService = ServiceManager.getBean(FooService.class);
 
-        Spark.get("/", (req, resp) -> fooService.printFoo() + " " + fooService.printBar());
+        Spark.get("/", "application/json", (req, resp) -> "{\"data\": \"" +fooService.printFoo() + " " + fooService.printBar() +"\"}");
     }
 }
