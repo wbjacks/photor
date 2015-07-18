@@ -171,6 +171,14 @@
                     </execution>
                 </executions>
 		    </plugin>
-		</plugins>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.herokuapp.obscurespire6277.photor.Application</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
 	</build>
 </project>
