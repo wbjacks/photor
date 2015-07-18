@@ -3,6 +3,7 @@ package com.herokuapp.obscurespire6277.photor.platform.web.controller;
 import com.herokuapp.obscurespire6277.photor.FooService;
 import com.herokuapp.obscurespire6277.photor.platform.web.util.Route;
 import jodd.petite.meta.PetiteBean;
+import jodd.petite.meta.PetiteInitMethod;
 import jodd.petite.meta.PetiteInject;
 import spark.Spark;
 

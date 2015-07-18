@@ -1,5 +1,6 @@
 package com.herokuapp.obscurespire6277.photor;
 
+import com.herokuapp.obscurespire6277.photor.platform.web.controller.FooController;
 import com.herokuapp.obscurespire6277.photor.util.ioc.ServiceManager;
 import spark.Spark;
 
@@ -9,9 +10,5 @@ public class Application {
             Spark.port(Integer.valueOf(args[0]));
         }
         ServiceManager.registerServices();
-
-        FooService fooService = ServiceManager.getBean(FooService.class);
-
-        Spark.get("/", (req, resp) -> fooService.printFoo() + " " + fooService.printBar());
     }
 }

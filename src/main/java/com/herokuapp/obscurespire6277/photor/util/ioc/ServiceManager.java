@@ -4,15 +4,16 @@ import com.herokuapp.obscurespire6277.photor.BarService;
 import com.herokuapp.obscurespire6277.photor.FooService;
 import com.herokuapp.obscurespire6277.photor.platform.web.controller.FooController;
 import jodd.petite.PetiteContainer;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import jodd.petite.meta.InitMethodInvocationStrategy;
+import jodd.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ServiceManager {
-    private static final List<Class> CORE_SERVICES = new ArrayList<>();
-    private static final List<Class> WEB_SERVICES = new ArrayList<>();
-    private static final List<Class> WEB_CONTROLLERS = new ArrayList<>();
+public class ServiceManager {
+    static final List<Class> CORE_SERVICES = new ArrayList<>();
+    static final List<Class> WEB_SERVICES = new ArrayList<>();
+    static final List<Class> WEB_CONTROLLERS = new ArrayList<>();
 
     static final PetiteContainer PETITE_CONTAINER = new PetiteContainer();
 
@@ -25,16 +26,22 @@ public final class ServiceManager {
         PETITE_CONTAINER.getConfig().setDetectDuplicatedBeanNames(true);
     }
 
-    private ServiceManager() {
-        throw new NotImplementedException();
-    }
-
     public static void registerServices() {
         for (Class coreService : CORE_SERVICES) {
             PETITE_CONTAINER.registerPetiteBean(coreService, null, null, null, false);
         }
         for (Class webController : WEB_CONTROLLERS) {
             PETITE_CONTAINER.registerPetiteBean(webController, null, null, null, false);
+        }
+        forceControllerWiring();
+    }
+
+    private static void forceControllerWiring() {
+        for (Class webController : WEB_CONTROLLERS) {
+            String beanName = StringUtil.uncapitalize(webController.getSimpleName());
+            PETITE_CONTAINER.registerPetiteInitMethods(beanName,
+                InitMethodInvocationStrategy.POST_INITIALIZE, "registerController");
+            getBean(webController);
         }
     }
 

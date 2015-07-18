@@ -7,13 +7,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-@PetiteBean
 public abstract class BaseController {
     @PetiteInitMethod
-    public void registerController() throws IllegalAccessException, InvocationTargetException {
+    public void registerController() {
         for (Method method : this.getClass().getMethods()) {
-            if (Arrays.asList(method.getAnnotations()).contains(Route.class)) {
-                method.invoke(this);
+            if (method.isAnnotationPresent(Route.class)) {
+                try {
+                    method.invoke(this);
+                }
+                catch(Exception e) {
+                }
             }
         }
     }
