@@ -10,7 +10,7 @@ import jodd.util.StringUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceManager {
+public final class ServiceManager {
     static final List<Class> CORE_SERVICES = new ArrayList<>();
     static final List<Class> WEB_SERVICES = new ArrayList<>();
     static final List<Class> WEB_CONTROLLERS = new ArrayList<>();
@@ -24,6 +24,10 @@ public class ServiceManager {
         WEB_CONTROLLERS.add(FooController.class);
 
         PETITE_CONTAINER.getConfig().setDetectDuplicatedBeanNames(true);
+    }
+
+    private ServiceManager() {
+        throw new IllegalStateException();
     }
 
     public static void registerServices() {
