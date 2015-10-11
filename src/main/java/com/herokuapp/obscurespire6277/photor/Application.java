@@ -1,5 +1,6 @@
 package com.herokuapp.obscurespire6277.photor;
 
+import com.herokuapp.obscurespire6277.photor.platform.web.controller.FooController;
 import com.herokuapp.obscurespire6277.photor.util.ioc.ServiceManager;
 import jodd.json.JoddJson;
 import spark.Spark;
