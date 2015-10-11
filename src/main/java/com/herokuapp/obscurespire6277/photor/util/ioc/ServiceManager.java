@@ -6,7 +6,6 @@ import com.herokuapp.obscurespire6277.photor.platform.web.controller.FooControll
 import jodd.petite.PetiteContainer;
 import jodd.petite.meta.InitMethodInvocationStrategy;
 import jodd.util.StringUtil;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,7 @@ public final class ServiceManager {
     }
 
     private ServiceManager() {
-        throw new NotImplementedException();
+        throw new IllegalStateException();
     }
 
     public static void registerServices() {
