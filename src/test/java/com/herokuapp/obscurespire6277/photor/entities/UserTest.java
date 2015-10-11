@@ -2,6 +2,7 @@ package com.herokuapp.obscurespire6277.photor.entities;
 
 import com.herokuapp.obscurespire6277.photor.PersistentTestBase;
 import com.herokuapp.obscurespire6277.photor.entities.User;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.ZonedDateTime;
@@ -11,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 public class UserTest extends PersistentTestBase {
 
+    /*
     @Test
     public void testPersistence() {
         ZonedDateTime now = ZonedDateTime.now(ET);
@@ -20,5 +22,5 @@ public class UserTest extends PersistentTestBase {
         assertEquals("amith", user.getHandle());
         assertEquals(now, user.getCreatedAt());
     }
-
+    */
 }

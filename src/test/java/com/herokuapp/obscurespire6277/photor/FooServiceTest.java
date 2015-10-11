@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.jmock.Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 
-
 import static org.junit.Assert.*;
 
 public class FooServiceTest {

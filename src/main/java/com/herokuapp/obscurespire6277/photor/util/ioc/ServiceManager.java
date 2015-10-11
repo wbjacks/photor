@@ -1,8 +1,8 @@
 package com.herokuapp.obscurespire6277.photor.util.ioc;
 
-import com.herokuapp.obscurespire6277.photor.BarService;
-import com.herokuapp.obscurespire6277.photor.FooService;
-import com.herokuapp.obscurespire6277.photor.platform.web.controller.FooController;
+import com.herokuapp.obscurespire6277.photor.platform.services.users.FacebookAuthService;
+import com.herokuapp.obscurespire6277.photor.platform.services.users.UserService;
+import com.herokuapp.obscurespire6277.photor.platform.web.controller.UserController;
 import jodd.petite.PetiteContainer;
 import jodd.petite.meta.InitMethodInvocationStrategy;
 import jodd.util.StringUtil;
@@ -19,10 +19,10 @@ public final class ServiceManager {
     static final PetiteContainer PETITE_CONTAINER = new PetiteContainer();
 
     static {
-        CORE_SERVICES.add(FooService.class);
-        CORE_SERVICES.add(BarService.class);
+        CORE_SERVICES.add(FacebookAuthService.class);
+        CORE_SERVICES.add(UserService.class);
 
-        WEB_CONTROLLERS.add(FooController.class);
+        WEB_CONTROLLERS.add(UserController.class);
 
         PETITE_CONTAINER.getConfig().setDetectDuplicatedBeanNames(true);
     }

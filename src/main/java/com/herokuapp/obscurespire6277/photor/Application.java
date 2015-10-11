@@ -1,6 +1,7 @@
 package com.herokuapp.obscurespire6277.photor;
 
 import com.herokuapp.obscurespire6277.photor.util.ioc.ServiceManager;
+import jodd.json.JoddJson;
 import spark.Spark;
 
 public class Application {
@@ -9,5 +10,8 @@ public class Application {
             Spark.port(Integer.valueOf(args[0]));
         }
         ServiceManager.registerServices();
+
+        // Global configurations
+        JoddJson.deepSerialization = true;
     }
 }
