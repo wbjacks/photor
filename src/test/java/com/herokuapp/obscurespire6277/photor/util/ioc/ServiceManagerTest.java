@@ -9,6 +9,8 @@ public class ServiceManagerTest {
     public void testRegisteredServiceCanBeFetchedFromPetite() {
         ServiceManager.CORE_SERVICES.clear();
         ServiceManager.WEB_SERVICES.clear();
+        ServiceManager.WEB_CONTROLLERS.clear();
+
         ServiceManager.CORE_SERVICES.add(TestClass.class);
         ServiceManager.registerServices();
 
