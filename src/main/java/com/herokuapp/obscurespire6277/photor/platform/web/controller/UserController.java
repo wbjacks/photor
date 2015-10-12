@@ -21,4 +21,9 @@ public class UserController extends BaseController {
         Spark.get("/user/:user_id", (request, response) ->
             new JsonSerializer().serialize(_userService.getUser(request.params(":user_id"))));
     }
+
+    @Route
+    public void logInUser() {
+        Spark.get("/user/login/:facebook_short_token", ((request, response) -> ));
+    }
 }

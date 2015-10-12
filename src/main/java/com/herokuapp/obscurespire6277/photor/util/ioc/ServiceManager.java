@@ -3,6 +3,7 @@ package com.herokuapp.obscurespire6277.photor.util.ioc;
 import com.herokuapp.obscurespire6277.photor.platform.services.users.FacebookAuthService;
 import com.herokuapp.obscurespire6277.photor.platform.services.users.UserService;
 import com.herokuapp.obscurespire6277.photor.platform.web.controller.UserController;
+import com.herokuapp.obscurespire6277.photor.util.web.WebCallService;
 import jodd.petite.PetiteContainer;
 import jodd.petite.meta.InitMethodInvocationStrategy;
 import jodd.util.StringUtil;
@@ -18,8 +19,10 @@ public final class ServiceManager {
     static final PetiteContainer PETITE_CONTAINER = new PetiteContainer();
 
     static {
-        CORE_SERVICES.add(FacebookAuthService.class);
         CORE_SERVICES.add(UserService.class);
+        CORE_SERVICES.add(WebCallService.class);
+
+        WEB_SERVICES.add(FacebookAuthService.class);
 
         WEB_CONTROLLERS.add(UserController.class);
 
@@ -33,6 +36,9 @@ public final class ServiceManager {
     public static void registerServices() {
         for (Class coreService : CORE_SERVICES) {
             PETITE_CONTAINER.registerPetiteBean(coreService, null, null, null, false);
+        }
+        for (Class webService : WEB_SERVICES) {
+            PETITE_CONTAINER.registerPetiteBean(webService, null, null, null, false);
         }
         for (Class webController : WEB_CONTROLLERS) {
             PETITE_CONTAINER.registerPetiteBean(webController, null, null, null, false);

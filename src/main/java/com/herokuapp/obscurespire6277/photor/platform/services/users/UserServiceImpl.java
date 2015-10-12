@@ -21,4 +21,8 @@ public class UserServiceImpl implements UserService {
         // return
         return user;
     }
+
+    public void logInUser(String facebookShortToken) {
+
+    }
 }
