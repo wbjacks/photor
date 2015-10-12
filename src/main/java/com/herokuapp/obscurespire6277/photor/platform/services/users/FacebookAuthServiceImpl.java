@@ -2,6 +2,7 @@ package com.herokuapp.obscurespire6277.photor.platform.services.users;
 
 import com.herokuapp.obscurespire6277.photor.platform.models.FacebookDebugTokenResponse;
 import com.herokuapp.obscurespire6277.photor.platform.web.util.ThirdPartyException;
+import com.herokuapp.obscurespire6277.photor.util.crypto.CryptoService;
 import com.herokuapp.obscurespire6277.photor.util.web.WebCallService;
 import jodd.json.JsonParser;
 import jodd.petite.meta.PetiteBean;
@@ -17,10 +18,14 @@ public class FacebookAuthServiceImpl implements FacebookAuthService {
     private static final String FACEBOOK_API_HOST = "graph.facebook.com";
     private static final String DEBUG_TOKEN_PATH = "/debug_token";
     private static final String LONG_TOKEN_PATH = "oauth/access_token";
+    private static final String FACEBOOK_APP_ID = "FACEBOOK_APP_ID";
+    private static final String FACEBOOK_APP_SECRET = "FACEBOOK_APP_SECRET";
 
+    private final CryptoService _cryptoService;
     private final WebCallService _webCallService;
 
-    public FacebookAuthServiceImpl(WebCallService webCallService) {
+    public FacebookAuthServiceImpl(CryptoService cryptoService, WebCallService webCallService) {
+        _cryptoService = cryptoService;
         _webCallService = webCallService;
     }
 
@@ -32,7 +37,6 @@ public class FacebookAuthServiceImpl implements FacebookAuthService {
         // Make call to facebook token inspection
         Map<String, String> params = new HashMap<>();
         params.put("input_token", token);
-        params.put("access_token", "" /* app token */);
         Optional<String> json;
         try {
             json = _webCallService.doGetRequest(FACEBOOK_API_HOST, DEBUG_TOKEN_PATH, params);
@@ -66,8 +70,8 @@ public class FacebookAuthServiceImpl implements FacebookAuthService {
         // Make call to fbook to get long token
         Map<String, String> params = new HashMap<>();
         params.put("grant_type", "fb_exchange_token");
-        params.put("client_id", "" /* app id */);
-        params.put("client_secret", "" /* app secret */);
+        params.put("client_id", _cryptoService.getEnvironmentVariableValue(FACEBOOK_APP_ID);
+        params.put("client_secret", _cryptoService.getEnvironmentVariableValue(FACEBOOK_APP_SECRET);
         params.put("fb_exchange_token", shortToken);
 
         // TODO: (wjackson) check if response contains more than just token
