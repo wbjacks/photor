@@ -5,7 +5,7 @@ import org.hibernate.Transaction;
 
 import static com.herokuapp.obscurespire6277.photor.platform.hibernate.HibernateUtil.getSessionFactory;
 
-public class TransactorImpl implements Transactor {
+class TransactorImpl implements Transactor {
 
     @Override
     public void execute(WithVoidSession withVoidSession) {

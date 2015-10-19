@@ -2,7 +2,7 @@ package com.herokuapp.obscurespire6277.photor.platform.hibernate;
 
 import org.hibernate.Session;
 
-public class TypeSafeSessionWrapperImpl implements TypeSafeSessionWrapper {
+class TypeSafeSessionWrapperImpl implements TypeSafeSessionWrapper {
 
     private final Session _session;
 
