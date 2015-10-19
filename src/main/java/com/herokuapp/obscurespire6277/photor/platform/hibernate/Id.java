@@ -44,6 +44,8 @@ public class Id<T extends HibernateEntity> implements UserType, ResultSetIdentif
         return _id.hashCode();
     }
 
+    // TODO: AMITH (make IDs natively persistable inside a HibernateEntity)
+
     @Override
     public Serializable consumeIdentifier(ResultSet resultSet) {
         return null;

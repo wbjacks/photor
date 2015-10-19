@@ -10,4 +10,6 @@ public interface Transactor {
 
     <T> T execute(WithReadOnlySession<T> withReadOnlySession);
 
+    <T extends HibernateEntity> Id<T> save(T hibernateEntity);
+
 }
