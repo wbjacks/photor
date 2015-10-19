@@ -18,7 +18,7 @@ public class FacebookAuthServiceImpl implements FacebookAuthService {
     private static final String FACEBOOK_API_HOST = "graph.facebook.com";
     private static final String DEBUG_TOKEN_PATH = "/debug_token";
     private static final String LONG_TOKEN_PATH = "oauth/access_token";
-    private static final String FACEBOOK_APP_ID = "FACEBOOK_APP_ID";
+    private static final String FACEBOOK_APP_ID = "1696711563891334";
     private static final String FACEBOOK_APP_SECRET = "FACEBOOK_APP_SECRET";
 
     private final CryptoService _cryptoService;
@@ -70,8 +70,8 @@ public class FacebookAuthServiceImpl implements FacebookAuthService {
         // Make call to fbook to get long token
         Map<String, String> params = new HashMap<>();
         params.put("grant_type", "fb_exchange_token");
-        params.put("client_id", _cryptoService.getEnvironmentVariableValue(FACEBOOK_APP_ID);
-        params.put("client_secret", _cryptoService.getEnvironmentVariableValue(FACEBOOK_APP_SECRET);
+        params.put("client_id", FACEBOOK_APP_ID);
+        params.put("client_secret", _cryptoService.getEnvironmentVariableValue(FACEBOOK_APP_SECRET));
         params.put("fb_exchange_token", shortToken);
 
         // TODO: (wjackson) check if response contains more than just token

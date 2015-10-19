@@ -16,15 +16,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void logInUser(String userId, String facebookShortToken) {
+    public Optional<String> logInUser(String userId, String facebookShortToken) {
         Optional<String> longToken = _facebookAuthService.getLongTokenFromShortToken(facebookShortToken);
 
         // If token is returned, store to database
         if (longToken.isPresent()) {
 
         }
-        else {
-        // Else, reject user (throw login exceptions or return false)
-        }
+        return longToken;
     }
 }
