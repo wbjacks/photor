@@ -1,5 +1,7 @@
 package com.herokuapp.obscurespire6277.photor.entities;
 
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.HibernateEntity;
+
 import javax.persistence.*;
 import java.sql.Blob;
 import java.time.ZonedDateTime;
@@ -12,12 +14,15 @@ import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Table(name = "photos")
-public class Photo {
+public class Photo implements HibernateEntity {
 
     @Id
     @GeneratedValue
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
+
+    @Version
+    private Long version;
 
     @ManyToOne
     private User user;
@@ -71,6 +76,7 @@ public class Photo {
         comment.setPhoto(this);
     }
 
+    @Override
     public Long getId() {
         return id;
     }

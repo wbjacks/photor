@@ -1,24 +1,33 @@
 package com.herokuapp.obscurespire6277.photor.entities;
 
 import com.herokuapp.obscurespire6277.photor.PersistentTestBase;
-import com.herokuapp.obscurespire6277.photor.entities.User;
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.DbSession;
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.WithSession;
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.WithVoidReadOnlySession;
 import org.junit.Test;
 
 import java.time.ZonedDateTime;
 
 import static com.herokuapp.obscurespire6277.photor.util.time.TimeZones.ET;
-import static org.junit.Assert.assertEquals;
 
 public class UserTest extends PersistentTestBase {
 
     @Test
     public void testPersistence() {
-        ZonedDateTime now = ZonedDateTime.now(ET);
-        long id = (Long) session.save(new User("amith", now));
-
-        User user = (User) session.get(User.class, id);
-        assertEquals("amith", user.getHandle());
-        assertEquals(now, user.getCreatedAt());
+        User user = new User("amith", ZonedDateTime.now(ET));
+        Id<User> userId = _transactor.execute(new WithSession<Id<User>>() {
+            @Override
+            public Id<User> run(DbSession session) {
+                return session.save(user);
+            }
+        });
+        _transactor.execute(new WithVoidReadOnlySession() {
+            @Override
+            public void run(DbSession readOnlySession) {
+                User user = readOnlySession.get(User.class, userId);
+            }
+        });
     }
 
 }

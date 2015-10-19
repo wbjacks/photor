@@ -1,36 +1,24 @@
 package com.herokuapp.obscurespire6277.photor;
 
-import org.hibernate.Session;
-import org.junit.After;
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.Transactor;
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.TransactorImpl;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 
-import static com.herokuapp.obscurespire6277.photor.platform.hibernate.HibernateUtil.getSessionFactory;
 import static com.herokuapp.obscurespire6277.photor.platform.hibernate.HibernateUtil.shutdown;
 
 public class PersistentTestBase {
 
-    public static Session session;
+    public static Transactor _transactor;
 
     @BeforeClass
     public static void beforeClass() {
-        session = getSessionFactory().openSession();
-    }
-
-    @Before
-    public void before() {
-        session.beginTransaction();
-    }
-
-    @After
-    public void after() {
-        session.getTransaction().commit();
+        _transactor = new TransactorImpl();
     }
 
     @AfterClass
     public static void afterClass() {
-        shutdown();
+        //shutdown();
     }
 
 }

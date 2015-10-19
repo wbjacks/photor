@@ -1,5 +1,6 @@
 package com.herokuapp.obscurespire6277.photor.entities;
 
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.HibernateEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,12 +9,15 @@ import java.util.Optional;
 
 @Entity
 @Table(name = "logins")
-public class LogIn {
+public class LogIn implements HibernateEntity {
 
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy="increment")
     private Long id;
+
+    @Version
+    private Long version;
 
     @Column(name = "when", nullable = false)
     private ZonedDateTime when;
@@ -27,11 +31,14 @@ public class LogIn {
     @ManyToOne
     private User user;
 
+    public LogIn() { /* hibernate */ }
+
     // for use by User#addLogIn and tests ONLY
     public void setUser(User user) {
         this.user = user;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
