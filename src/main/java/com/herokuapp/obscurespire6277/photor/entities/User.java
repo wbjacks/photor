@@ -112,4 +112,8 @@ public class User implements HibernateEntity {
         return comments;
     }
 
+    public void setHandle(String newHandle) {
+        this.handle = newHandle;
+    }
+
 }
