@@ -34,7 +34,7 @@ public class WebCallServiceImpl implements WebCallService {
             (entry.getKey(), entry.getValue())).collect(Collectors.toList())).build();
         } catch (URISyntaxException e) {
             // TODO: (wjackson) add logging
-            return null;
+            return Optional.empty();
         }
 
         HttpResponse response = Request.Get(uri).execute().returnResponse();

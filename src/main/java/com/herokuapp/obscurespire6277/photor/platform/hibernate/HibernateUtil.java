@@ -15,7 +15,7 @@ public class HibernateUtil {
         {
             Configuration configuration = new Configuration()
                     .configure(HibernateUtil.class.getResource("/hibernate.cfg.xml"))
-                    .addAnnotatedClass(User.class)
+                    .addAnnotatedClass(UserEntity.class)
                     .addAnnotatedClass(Photo.class)
                     .addAnnotatedClass(Like.class)
                     .addAnnotatedClass(Comment.class)

@@ -16,18 +16,18 @@ public class UserTest extends PersistentTestBase {
 
     @Test
     public void testPersistence() {
-        User user = new User("amith", ZonedDateTime.now(ET));
-        Id<User> userId = _transactor.execute(new WithSession<Id<User>>() {
+        UserEntity userEntity = new UserEntity("amith", ZonedDateTime.now(ET));
+        Id<UserEntity> userId = _transactor.execute(new WithSession<Id<UserEntity>>() {
             @Override
-            public Id<User> run(TypeSafeSessionWrapper session) {
-                return session.save(user);
+            public Id<UserEntity> run(TypeSafeSessionWrapper session) {
+                return session.save(userEntity);
             }
         });
         _transactor.execute(new WithVoidReadOnlySession() {
             @Override
             public void run(TypeSafeSessionWrapper readOnlySession) {
-                User user = readOnlySession.get(User.class, userId).get();
-                assertEquals("amith", user.getHandle());
+                UserEntity userEntity = readOnlySession.get(UserEntity.class, userId).get();
+                assertEquals("amith", userEntity.getHandle());
             }
         });
     }

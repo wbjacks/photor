@@ -25,7 +25,7 @@ public class Like implements HibernateEntity {
     private LogIn login;
 
     @ManyToOne
-    private User user;
+    private UserEntity userEntity;
 
     @ManyToOne
     private Photo photo;
@@ -38,11 +38,11 @@ public class Like implements HibernateEntity {
     }
 
     // for use by User#addLike and tests ONLY
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
-    // for use by User#addPhoto and tests ONLY
+    // for use by UserEntity#addPhoto and tests ONLY
     public void setPhoto(Photo photo) {
         this.photo = photo;
     }
@@ -60,8 +60,8 @@ public class Like implements HibernateEntity {
         return login;
     }
 
-    public User getUser() {
-        return user;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
     public Photo getPhoto() {

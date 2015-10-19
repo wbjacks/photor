@@ -1,60 +1,78 @@
 package com.herokuapp.obscurespire6277.photor.platform.models;
 
+import com.herokuapp.obscurespire6277.photor.entities.UserEntity;
 import jodd.json.meta.JSON;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 @JSON(strict = true)
 public class User {
-    @JSON
-    private Long id;
-    @JSON
-    private String handle;
-    @JSON
-    private Date createdAt;
-    @JSON
-    private String firstName;
-    @JSON
-    private String lastName;
+    @JSON(name = "id")
+    private Long _id;
+
+    @JSON(name = "handle")
+    private String _handle;
+
+    @JSON(name = "createdAt")
+    private ZonedDateTime _createdAt;
+
+    @JSON(name = "firstName")
+    private String _firstName;
+
+    @JSON(name = "lastName")
+    private String _lastName;
+
+    private User(Long id, String handle, ZonedDateTime createdAt, String firstName, String lastName) {
+        _id = id;
+        _handle = handle;
+        _createdAt = createdAt;
+        _firstName = firstName;
+        _lastName = lastName;
+    }
+
+    public static User fromHibernateEntity(UserEntity userEntity) {
+        return new User(userEntity.getId(), userEntity.getHandle(), userEntity.getCreatedAt(),
+            userEntity.getFirstName().get(), userEntity.getLastName().get());
+    }
 
     public Long getId() {
-        return id;
+        return _id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        _id = id;
     }
 
     public String getHandle() {
-        return handle;
+        return _handle;
     }
 
     public void setHandle(String handle) {
-        this.handle = handle;
+        _handle = handle;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public ZonedDateTime getCreatedAt() {
+        return _createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setCreatedAt(ZonedDateTime createdAt) {
+        _createdAt = createdAt;
     }
 
     public String getFirstName() {
-        return firstName;
+        return _firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        _firstName = firstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return _lastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        _lastName = lastName;
     }
     //private List<LogIn> logins = new ArrayList<>();
     //private List<Photo> photos = new ArrayList<>();

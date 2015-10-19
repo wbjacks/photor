@@ -29,13 +29,13 @@ public class LogIn implements HibernateEntity {
     private double latitude;
 
     @ManyToOne
-    private User user;
+    private UserEntity userEntity;
 
     public LogIn() { /* hibernate */ }
 
     // for use by User#addLogIn and tests ONLY
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
     @Override
@@ -55,8 +55,8 @@ public class LogIn implements HibernateEntity {
         return Optional.ofNullable(latitude);
     }
 
-    public User getUser() {
-        return user;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
 }

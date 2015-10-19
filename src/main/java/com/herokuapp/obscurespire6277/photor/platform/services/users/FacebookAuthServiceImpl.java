@@ -66,7 +66,7 @@ public class FacebookAuthServiceImpl implements FacebookAuthService {
     }
 
     @Override
-    public Optional<String> getLongTokenFromShortToken(String shortToken) {
+    public String getLongTokenFromShortToken(String shortToken) throws IOException, ThirdPartyException {
         // Make call to fbook to get long token
         Map<String, String> params = new HashMap<>();
         params.put("grant_type", "fb_exchange_token");
@@ -75,14 +75,8 @@ public class FacebookAuthServiceImpl implements FacebookAuthService {
         params.put("fb_exchange_token", shortToken);
 
         // TODO: (wjackson) check if response contains more than just token
-        try {
-            return _webCallService.doGetRequest(FACEBOOK_API_HOST, LONG_TOKEN_PATH, params);
-        }
-        catch (IOException e) {
-            return Optional.empty();
-        }
-        catch (ThirdPartyException e) {
-            return Optional.empty();
-        }
+        // TODO: (wjackson) thow something other than IOException
+        return _webCallService.doGetRequest(FACEBOOK_API_HOST, LONG_TOKEN_PATH, params)
+            .orElseThrow(IOException::new);
     }
 }

@@ -1,8 +1,5 @@
 package com.herokuapp.obscurespire6277.photor.entities;
 
-import com.herokuapp.obscurespire6277.photor.entities.LogIn;
-import com.herokuapp.obscurespire6277.photor.entities.Photo;
-import com.herokuapp.obscurespire6277.photor.entities.User;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.HibernateEntity;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -31,7 +28,7 @@ public class Comment implements HibernateEntity {
     private LogIn login;
 
     @ManyToOne
-    private User user;
+    private UserEntity userEntity;
 
     @ManyToOne
     private Photo photo;
@@ -45,8 +42,8 @@ public class Comment implements HibernateEntity {
     }
 
     // for use by User#addComment and tests ONLY
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
     // for use by Photo#addComment and tests ONLY
@@ -67,8 +64,8 @@ public class Comment implements HibernateEntity {
         return login;
     }
 
-    public User getUser() {
-        return user;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
     public Photo getPhoto() {

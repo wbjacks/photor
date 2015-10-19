@@ -14,7 +14,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "users")
-public class User implements HibernateEntity {
+public class UserEntity implements HibernateEntity {
 
     @Id
     @GeneratedValue(generator="increment")
@@ -36,6 +36,9 @@ public class User implements HibernateEntity {
     @Column(name = "last_name", nullable = true)
     private String lastName;
 
+    @Column(name = "facebook_long_token", nullable = true)
+    private String facebookLongToken;
+
     @OneToMany(mappedBy = "user", cascade = PERSIST, fetch = LAZY)
     private List<LogIn> logins = new ArrayList<>();
 
@@ -48,31 +51,31 @@ public class User implements HibernateEntity {
     @OneToMany(mappedBy = "user", cascade = PERSIST, fetch = LAZY)
     private List<Comment> comments = new ArrayList<>();
 
-    public User() { /* hibernate */ }
+    public UserEntity() { /* hibernate */ }
 
-    public User(String handle, ZonedDateTime createdAt) {
+    public UserEntity(String handle, ZonedDateTime createdAt) {
         this.handle = handle;
         this.createdAt = createdAt;
     }
 
     public void addLogIn(LogIn login) {
         this.logins.add(login);
-        login.setUser(this);
+        login.setUserEntity(this);
     }
 
     public void addPhoto(Photo photo) {
         this.photos.add(photo);
-        photo.setUser(this);
+        photo.setUserEntity(this);
     }
 
     public void addLike(Like like) {
         this.likes.add(like);
-        like.setUser(this);
+        like.setUserEntity(this);
     }
 
     public void addComment(Comment comment) {
         this.comments.add(comment);
-        comment.setUser(this);
+        comment.setUserEntity(this);
     }
 
     @Override
@@ -116,4 +119,11 @@ public class User implements HibernateEntity {
         this.handle = newHandle;
     }
 
+    public Optional<String> getFacebookLongToken() {
+        return Optional.of(facebookLongToken);
+    }
+
+    public void setFacebookLongToken(String facebookLongToken) {
+        this.facebookLongToken = facebookLongToken;
+    }
 }
