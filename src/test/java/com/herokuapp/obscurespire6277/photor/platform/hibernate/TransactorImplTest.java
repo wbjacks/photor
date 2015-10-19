@@ -76,8 +76,8 @@ public class TransactorImplTest {
         }
         transactor.execute(new WithVoidReadOnlySession() {
             @Override
-            public void run(TypeSafeSessionWrapper session) {
-                assertEquals("test", session.getOrThrow(User.class, testUserId).getHandle());
+            public void run(TypeSafeSessionWrapper readOnlySession) {
+                assertEquals("test", readOnlySession.getOrThrow(User.class, testUserId).getHandle());
             }
         });
     }
