@@ -2,16 +2,16 @@ package com.herokuapp.obscurespire6277.photor.platform.hibernate;
 
 import org.hibernate.Session;
 
-public class DbSessionImpl implements DbSession {
+public class TypeSafeSessionWrapperImpl implements TypeSafeSessionWrapper {
 
     private final Session _session;
 
-    private DbSessionImpl(Session session) {
+    private TypeSafeSessionWrapperImpl(Session session) {
         this._session = session;
     }
 
-    static DbSession of(Session session) {
-        return new DbSessionImpl(session);
+    static TypeSafeSessionWrapper of(Session session) {
+        return new TypeSafeSessionWrapperImpl(session);
     }
 
     @Override

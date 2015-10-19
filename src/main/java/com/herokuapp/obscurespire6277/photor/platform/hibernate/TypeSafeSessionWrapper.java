@@ -5,7 +5,7 @@ import org.hibernate.Session;
 /**
  * A type-safe wrapper around a Hibernate session.
  */
-public interface DbSession {
+public interface TypeSafeSessionWrapper {
 
     <T extends HibernateEntity> Id<T> save(T entity);
 

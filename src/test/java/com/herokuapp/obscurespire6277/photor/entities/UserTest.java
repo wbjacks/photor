@@ -1,7 +1,7 @@
 package com.herokuapp.obscurespire6277.photor.entities;
 
 import com.herokuapp.obscurespire6277.photor.PersistentTestBase;
-import com.herokuapp.obscurespire6277.photor.platform.hibernate.DbSession;
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.TypeSafeSessionWrapper;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.WithSession;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.WithVoidReadOnlySession;
@@ -18,13 +18,13 @@ public class UserTest extends PersistentTestBase {
         User user = new User("amith", ZonedDateTime.now(ET));
         Id<User> userId = _transactor.execute(new WithSession<Id<User>>() {
             @Override
-            public Id<User> run(DbSession session) {
+            public Id<User> run(TypeSafeSessionWrapper session) {
                 return session.save(user);
             }
         });
         _transactor.execute(new WithVoidReadOnlySession() {
             @Override
-            public void run(DbSession readOnlySession) {
+            public void run(TypeSafeSessionWrapper readOnlySession) {
                 User user = readOnlySession.get(User.class, userId);
             }
         });
