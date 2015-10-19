@@ -2,6 +2,8 @@ package com.herokuapp.obscurespire6277.photor.platform.hibernate;
 
 import org.hibernate.Session;
 
+import java.util.Optional;
+
 class TypeSafeSessionWrapperImpl implements TypeSafeSessionWrapper {
 
     private final Session _session;
@@ -20,8 +22,13 @@ class TypeSafeSessionWrapperImpl implements TypeSafeSessionWrapper {
     }
 
     @Override
-    public <T extends HibernateEntity> T get(Class<T> cla$$, Id<T> id) {
-        return _session.get(cla$$, id.toLong());
+    public <T extends HibernateEntity> Optional<T> get(Class<T> cla$$, Id<T> id) {
+        return Optional.ofNullable(_session.get(cla$$, id.toLong()));
+    }
+
+    @Override
+    public <T extends HibernateEntity> T getOrThrow(Class<T> cla$$, Id<T> id) {
+        return get(cla$$, id).get();
     }
 
     @Override
