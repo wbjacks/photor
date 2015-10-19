@@ -1,8 +1,8 @@
 package com.herokuapp.obscurespire6277.photor.entities;
 
 import com.herokuapp.obscurespire6277.photor.PersistentTestBase;
-import com.herokuapp.obscurespire6277.photor.platform.hibernate.TypeSafeSessionWrapper;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.TypeSafeSessionWrapper;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.WithSession;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.WithVoidReadOnlySession;
 import org.junit.Test;
@@ -10,6 +10,7 @@ import org.junit.Test;
 import java.time.ZonedDateTime;
 
 import static com.herokuapp.obscurespire6277.photor.util.time.TimeZones.ET;
+import static org.junit.Assert.assertEquals;
 
 public class UserTest extends PersistentTestBase {
 
@@ -26,6 +27,7 @@ public class UserTest extends PersistentTestBase {
             @Override
             public void run(TypeSafeSessionWrapper readOnlySession) {
                 User user = readOnlySession.get(User.class, userId);
+                assertEquals("amith", user.getHandle());
             }
         });
     }

@@ -5,6 +5,8 @@ import com.herokuapp.obscurespire6277.photor.platform.hibernate.TransactorImpl;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
+import static com.herokuapp.obscurespire6277.photor.platform.hibernate.HibernateUtil.shutdown;
+
 public class PersistentTestBase {
 
     public static Transactor _transactor;
@@ -16,7 +18,7 @@ public class PersistentTestBase {
 
     @AfterClass
     public static void afterClass() {
-        //shutdown();
+        shutdown();
     }
 
 }
