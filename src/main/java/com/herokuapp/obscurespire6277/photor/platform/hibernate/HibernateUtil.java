@@ -14,7 +14,7 @@ class HibernateUtil {
         if (_sessionFactory == null || _sessionFactory.isClosed())
         {
             Configuration configuration = new Configuration()
-                    .configure(HibernateUtil.class.getResource("hibernate.cfg.xml"))
+                    .configure(HibernateUtil.class.getResource("/hibernate.cfg.xml"))
                     .addAnnotatedClass(User.class)
                     .addAnnotatedClass(Photo.class)
                     .addAnnotatedClass(Like.class)
@@ -25,7 +25,6 @@ class HibernateUtil {
             ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
             _sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         }
-
         return _sessionFactory;
     }
 
