@@ -59,6 +59,7 @@ public class TransactorImpl implements Transactor {
             throw e;
         }
         transaction.commit();
+        session.close();
         return returnValue;
     }
 
@@ -71,6 +72,7 @@ public class TransactorImpl implements Transactor {
             throw e;
         }
         transaction.commit();
+        session.close();
     }
 
 }
