@@ -1,5 +1,6 @@
 package com.herokuapp.obscurespire6277.photor.entities;
 
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.HibernateEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,12 +14,15 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements HibernateEntity {
 
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy="increment")
     private Long id;
+
+    @Version
+    private Long version;
 
     @Column(name = "handle", nullable = false)
     private String handle;
@@ -71,6 +75,7 @@ public class User {
         comment.setUser(this);
     }
 
+    @Override
     public Long getId() {
         return id;
     }
