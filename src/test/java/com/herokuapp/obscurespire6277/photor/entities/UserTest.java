@@ -26,7 +26,7 @@ public class UserTest extends PersistentTestBase {
         _transactor.execute(new WithVoidReadOnlySession() {
             @Override
             public void run(TypeSafeSessionWrapper readOnlySession) {
-                User user = readOnlySession.get(User.class, userId);
+                User user = readOnlySession.get(User.class, userId).get();
                 assertEquals("amith", user.getHandle());
             }
         });
