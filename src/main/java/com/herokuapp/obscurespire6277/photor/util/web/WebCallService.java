@@ -8,5 +8,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface WebCallService {
-    Optional<String> doGetRequest(String host, String path, Map<String, String> urlParams) throws IOException, ThirdPartyException;
+    Optional<String> doGetRequest(String host, String path, Map<String, String> urlParams)
+            throws WebCallException, ThirdPartyException;
 }

@@ -6,6 +6,7 @@ import com.herokuapp.obscurespire6277.photor.platform.hibernate.Transactor;
 import com.herokuapp.obscurespire6277.photor.platform.models.User;
 import com.herokuapp.obscurespire6277.photor.platform.repos.UserRepositoryService;
 import com.herokuapp.obscurespire6277.photor.platform.web.util.ThirdPartyException;
+import com.herokuapp.obscurespire6277.photor.util.web.WebCallException;
 import jodd.petite.meta.PetiteBean;
 import jodd.petite.meta.PetiteInject;
 
@@ -24,9 +25,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String logInUser(Id<UserEntity> id, String facebookShortToken) throws IOException, ThirdPartyException {
+    public User logInUser(Id<UserEntity> id, String facebookShortToken) throws WebCallException, ThirdPartyException {
         String longToken = _facebookAuthService.getLongTokenFromShortToken(facebookShortToken);
         _userRepositoryService.saveTokenToUser(id, longToken);
-        return longToken;
+        return _userRepositoryService.getUserWithId(id).get();
     }
 }

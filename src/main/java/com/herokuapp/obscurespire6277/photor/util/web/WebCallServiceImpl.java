@@ -8,6 +8,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @PetiteBean("webCallService")
 public class WebCallServiceImpl implements WebCallService {
+    private static final Logger _logger = Logger.getLogger(WebCallService.class);
     private static final String DEFAULT_BASE_SCHEME = "http";
 
     public WebCallServiceImpl() {
@@ -26,7 +28,7 @@ public class WebCallServiceImpl implements WebCallService {
 
     @Override
     public Optional<String> doGetRequest(String host, String path, Map<String, String> urlParams)
-     throws IOException, ThirdPartyException {
+     throws WebCallException, ThirdPartyException {
         URI uri;
         try {
             uri = new URIBuilder().setScheme(DEFAULT_BASE_SCHEME).setHost(host).setPath(path)
@@ -34,10 +36,19 @@ public class WebCallServiceImpl implements WebCallService {
             (entry.getKey(), entry.getValue())).collect(Collectors.toList())).build();
         } catch (URISyntaxException e) {
             // TODO: (wjackson) add logging
-            return Optional.empty();
+            throw new WebCallException(String
+                .format("Bad URI syntax in web call [host=%s]. [path=%s], [urlParams=%s]", host,
+                path, urlParams.entrySet().stream().map(entry -> String.format("%s:%s", entry
+                .getKey(), entry.getValue())).collect(Collectors.joining("|"))));
         }
 
-        HttpResponse response = Request.Get(uri).execute().returnResponse();
+        HttpResponse response;
+        try {
+            response = Request.Get(uri).execute().returnResponse();
+        }
+        catch (IOException e) {
+            throw new WebCallException("Error executing webcall.");
+        }
         InputStream inputStream = null;
         String responseContent;
         try {
@@ -45,8 +56,7 @@ public class WebCallServiceImpl implements WebCallService {
             responseContent = IOUtils.toString(inputStream, response.getEntity()
                     .getContentEncoding().getValue());
         } catch (IOException e) {
-            // TODO: (wbjacks) log
-            return Optional.empty();
+            throw new WebCallException("Error executing webcall.");
         } finally {
             if (inputStream != null) {
                 IOUtils.closeQuietly(inputStream);

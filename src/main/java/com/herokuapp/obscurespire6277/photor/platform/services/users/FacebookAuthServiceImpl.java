@@ -3,11 +3,11 @@ package com.herokuapp.obscurespire6277.photor.platform.services.users;
 import com.herokuapp.obscurespire6277.photor.platform.models.FacebookDebugTokenResponse;
 import com.herokuapp.obscurespire6277.photor.platform.web.util.ThirdPartyException;
 import com.herokuapp.obscurespire6277.photor.util.crypto.CryptoService;
+import com.herokuapp.obscurespire6277.photor.util.web.WebCallException;
 import com.herokuapp.obscurespire6277.photor.util.web.WebCallService;
 import jodd.json.JsonParser;
 import jodd.petite.meta.PetiteBean;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -41,7 +41,7 @@ public class FacebookAuthServiceImpl implements FacebookAuthService {
         try {
             json = _webCallService.doGetRequest(FACEBOOK_API_HOST, DEBUG_TOKEN_PATH, params);
         }
-        catch (IOException e) {
+        catch (WebCallException e) {
             // TODO: (wjacks) Log error
             return false;
         }
@@ -66,7 +66,7 @@ public class FacebookAuthServiceImpl implements FacebookAuthService {
     }
 
     @Override
-    public String getLongTokenFromShortToken(String shortToken) throws IOException, ThirdPartyException {
+    public String getLongTokenFromShortToken(String shortToken) throws WebCallException, ThirdPartyException {
         // Make call to fbook to get long token
         Map<String, String> params = new HashMap<>();
         params.put("grant_type", "fb_exchange_token");
@@ -77,6 +77,6 @@ public class FacebookAuthServiceImpl implements FacebookAuthService {
         // TODO: (wjackson) check if response contains more than just token
         // TODO: (wjackson) thow something other than IOException
         return _webCallService.doGetRequest(FACEBOOK_API_HOST, LONG_TOKEN_PATH, params)
-            .orElseThrow(IOException::new);
+            .orElseThrow(() -> new ThirdPartyException(0, "Unknown error in webcall."));
     }
 }

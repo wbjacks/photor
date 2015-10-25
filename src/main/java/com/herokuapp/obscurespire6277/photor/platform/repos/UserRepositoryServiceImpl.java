@@ -24,7 +24,7 @@ public class UserRepositoryServiceImpl implements UserRepositoryService {
             public Optional<User> run(TypeSafeSessionWrapper readOnlySession) {
                 Optional<UserEntity> userEntity = readOnlySession.get(UserEntity.class, id);
                 if (userEntity.isPresent()) {
-                    return Optional.of(User.fromHibernateEntity(userEntity.get());
+                    return Optional.of(User.fromHibernateEntity(userEntity.get()));
                 }
                 else {
                     return Optional.empty();
