@@ -1,7 +1,11 @@
 package com.herokuapp.obscurespire6277.photor.platform.hibernate;
 
-public interface HibernateEntity {
+import java.util.function.Function;
 
-    Long getId();
+public interface HibernateEntity<T extends HibernateEntity> {
+
+    Function<HibernateEntity, Id> TO_ID = (hibernateEntity -> hibernateEntity.getId());
+
+    Id<T> getId();
 
 }
