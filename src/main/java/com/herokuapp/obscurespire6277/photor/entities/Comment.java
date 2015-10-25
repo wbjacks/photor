@@ -1,6 +1,7 @@
 package com.herokuapp.obscurespire6277.photor.entities;
 
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.HibernateEntity;
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,12 +9,12 @@ import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "comments")
-public class Comment implements HibernateEntity {
+public class Comment implements HibernateEntity<Comment> {
 
-    @Id
+    @javax.persistence.Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy="increment")
-    private Long id;
+    private long id;
 
     @Version
     private Long version;
@@ -52,8 +53,8 @@ public class Comment implements HibernateEntity {
     }
 
     @Override
-    public Long getId() {
-        return id;
+    public Id<Comment> getId() {
+        return Id.of(id);
     }
 
     public ZonedDateTime getCreatedAt() {
