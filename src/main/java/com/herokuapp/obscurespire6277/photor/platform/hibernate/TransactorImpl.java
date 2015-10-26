@@ -1,10 +1,12 @@
 package com.herokuapp.obscurespire6277.photor.platform.hibernate;
 
+import jodd.petite.meta.PetiteBean;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import static com.herokuapp.obscurespire6277.photor.platform.hibernate.HibernateUtil.getSessionFactory;
 
+@PetiteBean("transactor")
 public class TransactorImpl implements Transactor {
 
     @Override

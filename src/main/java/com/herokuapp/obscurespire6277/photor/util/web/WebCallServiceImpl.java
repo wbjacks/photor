@@ -47,7 +47,7 @@ public class WebCallServiceImpl implements WebCallService {
             response = Request.Get(uri).execute().returnResponse();
         }
         catch (IOException e) {
-            throw new WebCallException("Error executing webcall.");
+            throw new WebCallException(String.format("Error executing webcall: %s", e.getMessage()));
         }
         InputStream inputStream = null;
         String responseContent;
@@ -56,7 +56,7 @@ public class WebCallServiceImpl implements WebCallService {
             responseContent = IOUtils.toString(inputStream, response.getEntity()
                     .getContentEncoding().getValue());
         } catch (IOException e) {
-            throw new WebCallException("Error executing webcall.");
+            throw new WebCallException(String.format("Error executing webcall: %s", e.getMessage()));
         } finally {
             if (inputStream != null) {
                 IOUtils.closeQuietly(inputStream);
