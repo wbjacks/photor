@@ -1,7 +1,7 @@
 package com.herokuapp.obscurespire6277.photor;
 
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
 import com.herokuapp.obscurespire6277.photor.platform.services.users.FacebookAuthService;
-import com.herokuapp.obscurespire6277.photor.platform.web.controller.FooController;
 import com.herokuapp.obscurespire6277.photor.util.ioc.ServiceManager;
 import jodd.json.JoddJson;
 import spark.Spark;
@@ -16,12 +16,13 @@ public class Application {
 
         // Global configurations
         JoddJson.deepSerialization = true;
+        JoddJson.defaultSerializers.register(Id.class, (jsonContext, value) -> jsonContext
+            .writeString(value.toString()));
 
         // Security filters
         Spark.before((request, response) -> {
-            if (!ServiceManager.getBean(FacebookAuthService.class).isUserAuthenticatedWithToken(
-                request.params(":user_id"), request.params(":token")))
-            {
+            if (!ServiceManager.getBean(FacebookAuthService.class).isUserAuthenticatedWithToken
+            (request.params(":user_id"), request.params(":token"))) {
                 response.redirect("/login");
             }
         });

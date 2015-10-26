@@ -27,7 +27,7 @@ public class Photo implements HibernateEntity<Photo> {
     private Long version;
 
     @ManyToOne
-    private UserEntity userEntity;
+    private User user;
 
     @Column(name = "created_at", nullable = false)
     private ZonedDateTime createdAt;
@@ -64,8 +64,8 @@ public class Photo implements HibernateEntity<Photo> {
     }
 
     /* for use by User#addPhoto and tests ONLY */
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void addLike(Like like) {
@@ -83,8 +83,8 @@ public class Photo implements HibernateEntity<Photo> {
         return Id.of(id);
     }
 
-    public UserEntity getUserEntity() {
-        return userEntity;
+    public User getUser() {
+        return user;
     }
 
     public ZonedDateTime getCreatedAt() {

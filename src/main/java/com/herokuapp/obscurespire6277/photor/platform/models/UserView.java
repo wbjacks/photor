@@ -1,14 +1,15 @@
 package com.herokuapp.obscurespire6277.photor.platform.models;
 
-import com.herokuapp.obscurespire6277.photor.entities.UserEntity;
+import com.herokuapp.obscurespire6277.photor.entities.User;
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
 import jodd.json.meta.JSON;
 
 import java.time.ZonedDateTime;
 
 @JSON(strict = true)
-public class User {
+public class UserView {
     @JSON(name = "id")
-    private Long _id;
+    private Id<User> _id;
 
     @JSON(name = "handle")
     private String _handle;
@@ -22,7 +23,8 @@ public class User {
     @JSON(name = "lastName")
     private String _lastName;
 
-    private User(Long id, String handle, ZonedDateTime createdAt, String firstName, String lastName) {
+    private UserView(Id<User> id, String handle, ZonedDateTime createdAt, String firstName,
+     String lastName) {
         _id = id;
         _handle = handle;
         _createdAt = createdAt;
@@ -30,16 +32,16 @@ public class User {
         _lastName = lastName;
     }
 
-    public static User fromHibernateEntity(UserEntity userEntity) {
-        return new User(userEntity.getId(), userEntity.getHandle(), userEntity.getCreatedAt(),
-            userEntity.getFirstName().get(), userEntity.getLastName().get());
+    public static UserView fromHibernateEntity(User user) {
+        return new UserView(user.getId(), user.getHandle(), user.getCreatedAt(),
+        user.getFirstName().get(), user.getLastName().get());
     }
 
-    public Long getId() {
+    public Id<User> getId() {
         return _id;
     }
 
-    public void setId(Long id) {
+    public void setId(Id<User> id) {
         _id = id;
     }
 

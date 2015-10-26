@@ -1,8 +1,8 @@
 package com.herokuapp.obscurespire6277.photor.platform.repos;
 
-import com.herokuapp.obscurespire6277.photor.entities.UserEntity;
+import com.herokuapp.obscurespire6277.photor.entities.User;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.*;
-import com.herokuapp.obscurespire6277.photor.platform.models.User;
+import com.herokuapp.obscurespire6277.photor.platform.models.UserView;
 import jodd.petite.meta.PetiteBean;
 import jodd.petite.meta.PetiteInject;
 
@@ -18,13 +18,13 @@ public class UserRepositoryServiceImpl implements UserRepositoryService {
     }
 
     @Override
-    public Optional<User> getUserWithId(Id<UserEntity> id) {
-         return _transactor.execute(new WithReadOnlySession<Optional<User>>() {
+    public Optional<UserView> getUserWithId(Id<User> id) {
+         return _transactor.execute(new WithReadOnlySession<Optional<UserView>>() {
             @Override
-            public Optional<User> run(TypeSafeSessionWrapper readOnlySession) {
-                Optional<UserEntity> userEntity = readOnlySession.get(UserEntity.class, id);
+            public Optional<UserView> run(TypeSafeSessionWrapper readOnlySession) {
+                Optional<User> userEntity = readOnlySession.get(User.class, id);
                 if (userEntity.isPresent()) {
-                    return Optional.of(User.fromHibernateEntity(userEntity.get()));
+                    return Optional.of(UserView.fromHibernateEntity(userEntity.get()));
                 }
                 else {
                     return Optional.empty();
@@ -34,11 +34,11 @@ public class UserRepositoryServiceImpl implements UserRepositoryService {
     }
 
     @Override
-    public void saveTokenToUser(Id<UserEntity> id, String longToken) {
+    public void saveTokenToUser(Id<User> id, String longToken) {
         _transactor.execute(new WithVoidSession() {
             @Override
             public void run(TypeSafeSessionWrapper session) {
-                session.getOrThrow(UserEntity.class, id).setFacebookLongToken(longToken);
+                session.getOrThrow(User.class, id).setFacebookLongToken(longToken);
             }
         });
     }

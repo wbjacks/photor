@@ -29,7 +29,7 @@ public class Comment implements HibernateEntity<Comment> {
     private LogIn login;
 
     @ManyToOne
-    private UserEntity userEntity;
+    private User user;
 
     @ManyToOne
     private Photo photo;
@@ -43,8 +43,8 @@ public class Comment implements HibernateEntity<Comment> {
     }
 
     // for use by User#addComment and tests ONLY
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     // for use by Photo#addComment and tests ONLY
@@ -65,8 +65,8 @@ public class Comment implements HibernateEntity<Comment> {
         return login;
     }
 
-    public UserEntity getUserEntity() {
-        return userEntity;
+    public User getUser() {
+        return user;
     }
 
     public Photo getPhoto() {

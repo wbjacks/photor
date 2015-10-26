@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>Photor</name>
-	<description>Fuck you</description>
+	<description>poop</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -63,12 +63,14 @@
             <groupId>org.jmock</groupId>
             <artifactId>jmock-junit4</artifactId>
             <version>2.8.1</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jmock</groupId>
             <artifactId>jmock-legacy</artifactId>
             <version>2.8.1</version>
+            <scope>test</scope>
         </dependency>
 
 		<!-- Hibernate -->
@@ -169,11 +171,12 @@
                 <version>2.18.1</version>
                 <configuration>
                     <junitArtifactName>junit:junit-dep</junitArtifactName>
-                    <parallel>methods</parallel>
-                    <threadCount>10</threadCount>
+                    <useFile>false</useFile>
+                    <trimStackTrace>false</trimStackTrace>
+                    <reuseForks>false</reuseForks>
+                    <forkCount>1</forkCount>
                 </configuration>
             </plugin>
-
 
             <!-- Packages into a jar, looking for deps in target/dependency-jars -->
             <plugin>
@@ -181,6 +184,9 @@
 				<artifactId>maven-jar-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
+                    <excludes>
+                        <exclude>**/log4j.properties</exclude>
+                    </excludes>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>

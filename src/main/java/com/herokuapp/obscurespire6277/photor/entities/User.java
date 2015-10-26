@@ -15,7 +15,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "users")
-public class UserEntity implements HibernateEntity<UserEntity> {
+public class User implements HibernateEntity<User> {
 
     @javax.persistence.Id
     @GeneratedValue(generator="increment")
@@ -52,35 +52,35 @@ public class UserEntity implements HibernateEntity<UserEntity> {
     @OneToMany(mappedBy = "user", cascade = PERSIST, fetch = LAZY)
     private List<Comment> comments = new ArrayList<>();
 
-    public UserEntity() { /* hibernate */ }
+    public User() { /* hibernate */ }
 
-    public UserEntity(String handle, ZonedDateTime createdAt) {
+    public User(String handle, ZonedDateTime createdAt) {
         this.handle = handle;
         this.createdAt = createdAt;
     }
 
     public void addLogIn(LogIn login) {
         this.logins.add(login);
-        login.setUserEntity(this);
+        login.setUser(this);
     }
 
     public void addPhoto(Photo photo) {
         this.photos.add(photo);
-        photo.setUserEntity(this);
+        photo.setUser(this);
     }
 
     public void addLike(Like like) {
         this.likes.add(like);
-        like.setUserEntity(this);
+        like.setUser(this);
     }
 
     public void addComment(Comment comment) {
         this.comments.add(comment);
-        comment.setUserEntity(this);
+        comment.setUser(this);
     }
 
     @Override
-    public Id<UserEntity> getId() {
+    public Id<User> getId() {
         return Id.of(id);
     }
 
