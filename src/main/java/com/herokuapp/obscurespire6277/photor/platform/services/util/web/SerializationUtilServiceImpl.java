@@ -1,6 +1,5 @@
-package com.herokuapp.obscurespire6277.photor.platform.web.util;
+package com.herokuapp.obscurespire6277.photor.platform.services.util.web;
 
-import com.google.gson.ExclusionStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.herokuapp.obscurespire6277.photor.platform.models.FacebookDebugTokenResponse;

@@ -1,6 +1,7 @@
 package com.herokuapp.obscurespire6277.photor.platform.models;
 
 import com.google.gson.*;
+import org.apache.http.annotation.Immutable;
 
 import java.lang.reflect.Type;
 import java.time.Instant;
@@ -11,17 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 // TODO: (wbjacks) move me to an inner class?
+// TODO: (wbjacks) find a new annotation?
+@Immutable
 public class FacebookDebugTokenResponse {
     private String _appId;
     private ZonedDateTime _expiresAt;
     private boolean _isValid;
     private String _userId;
-
-    // The below fields are unneeded
-    private String application;
-    private Date issuedAt;
-    private Map<String, String> metadata;
-    private List<String> scopes;
 
     public static Deserializer getDeserializer() {
         return new Deserializer();
@@ -31,15 +28,16 @@ public class FacebookDebugTokenResponse {
         return _appId;
     }
 
-    public void setAppId(String appId) {
+    private void setAppId(String appId) {
         this._appId = appId;
     }
 
+    // ZonedDateTime is immutable
     public ZonedDateTime getExpiresAt() {
         return _expiresAt;
     }
 
-    public void setExpiresAt(ZonedDateTime _expiresAt) {
+    private void setExpiresAt(ZonedDateTime _expiresAt) {
         this._expiresAt = _expiresAt;
     }
 
@@ -47,7 +45,7 @@ public class FacebookDebugTokenResponse {
         return _isValid;
     }
 
-    public void setIsValid(boolean isValid) {
+    private void setIsValid(boolean isValid) {
         this._isValid = isValid;
     }
 
@@ -55,7 +53,7 @@ public class FacebookDebugTokenResponse {
         return _userId;
     }
 
-    public void setUserId(String _userId) {
+    private void setUserId(String _userId) {
         this._userId = _userId;
     }
 

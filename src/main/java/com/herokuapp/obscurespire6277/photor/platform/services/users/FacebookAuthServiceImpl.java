@@ -1,11 +1,11 @@
 package com.herokuapp.obscurespire6277.photor.platform.services.users;
 
 import com.herokuapp.obscurespire6277.photor.platform.models.FacebookDebugTokenResponse;
-import com.herokuapp.obscurespire6277.photor.platform.web.util.SerializationUtilService;
+import com.herokuapp.obscurespire6277.photor.platform.services.util.web.SerializationUtilService;
 import com.herokuapp.obscurespire6277.photor.platform.web.util.ThirdPartyException;
-import com.herokuapp.obscurespire6277.photor.util.crypto.CryptoService;
-import com.herokuapp.obscurespire6277.photor.util.web.WebCallException;
-import com.herokuapp.obscurespire6277.photor.util.web.WebCallService;
+import com.herokuapp.obscurespire6277.photor.platform.services.util.crypto.CryptoService;
+import com.herokuapp.obscurespire6277.photor.platform.web.util.WebCallException;
+import com.herokuapp.obscurespire6277.photor.platform.services.util.web.WebCallService;
 import jodd.petite.meta.PetiteBean;
 import org.apache.log4j.Logger;
 

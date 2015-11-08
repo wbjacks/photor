@@ -1,4 +1,4 @@
-package com.herokuapp.obscurespire6277.photor.util.web;
+package com.herokuapp.obscurespire6277.photor.platform.web.util;
 
 public class WebCallException extends Exception {
     public WebCallException(String message) {

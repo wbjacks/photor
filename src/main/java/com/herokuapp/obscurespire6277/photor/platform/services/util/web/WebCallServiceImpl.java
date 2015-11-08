@@ -1,7 +1,8 @@
-package com.herokuapp.obscurespire6277.photor.util.web;
+package com.herokuapp.obscurespire6277.photor.platform.services.util.web;
 
 
 import com.herokuapp.obscurespire6277.photor.platform.web.util.ThirdPartyException;
+import com.herokuapp.obscurespire6277.photor.platform.web.util.WebCallException;
 import jodd.petite.meta.PetiteBean;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;

@@ -1,10 +1,7 @@
 package com.herokuapp.obscurespire6277.photor.platform.services.users;
 
 import com.herokuapp.obscurespire6277.photor.platform.web.util.ThirdPartyException;
-import com.herokuapp.obscurespire6277.photor.util.web.WebCallException;
-
-import java.io.IOException;
-import java.util.Optional;
+import com.herokuapp.obscurespire6277.photor.platform.web.util.WebCallException;
 
 public interface FacebookAuthService {
     boolean isUserAuthenticatedWithToken(String userId, String token);

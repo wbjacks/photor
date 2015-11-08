@@ -2,13 +2,12 @@ package com.herokuapp.obscurespire6277.photor.util.ioc;
 
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.Transactor;
 import com.herokuapp.obscurespire6277.photor.platform.repos.UserRepositoryService;
-import com.herokuapp.obscurespire6277.photor.platform.repos.UserRepositoryServiceImpl;
 import com.herokuapp.obscurespire6277.photor.platform.services.users.FacebookAuthService;
 import com.herokuapp.obscurespire6277.photor.platform.services.users.UserService;
 import com.herokuapp.obscurespire6277.photor.platform.web.controller.UserController;
-import com.herokuapp.obscurespire6277.photor.platform.web.util.SerializationUtilService;
-import com.herokuapp.obscurespire6277.photor.util.crypto.CryptoService;
-import com.herokuapp.obscurespire6277.photor.util.web.WebCallService;
+import com.herokuapp.obscurespire6277.photor.platform.services.util.web.SerializationUtilService;
+import com.herokuapp.obscurespire6277.photor.platform.services.util.crypto.CryptoService;
+import com.herokuapp.obscurespire6277.photor.platform.services.util.web.WebCallService;
 import jodd.petite.PetiteContainer;
 import jodd.petite.meta.InitMethodInvocationStrategy;
 import jodd.util.StringUtil;

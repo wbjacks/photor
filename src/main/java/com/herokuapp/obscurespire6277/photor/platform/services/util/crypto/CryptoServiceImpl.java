@@ -1,4 +1,4 @@
-package com.herokuapp.obscurespire6277.photor.util.crypto;
+package com.herokuapp.obscurespire6277.photor.platform.services.util.crypto;
 
 import jodd.petite.meta.PetiteBean;
 
