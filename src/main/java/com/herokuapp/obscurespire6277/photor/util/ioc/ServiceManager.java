@@ -6,6 +6,7 @@ import com.herokuapp.obscurespire6277.photor.platform.repos.UserRepositoryServic
 import com.herokuapp.obscurespire6277.photor.platform.services.users.FacebookAuthService;
 import com.herokuapp.obscurespire6277.photor.platform.services.users.UserService;
 import com.herokuapp.obscurespire6277.photor.platform.web.controller.UserController;
+import com.herokuapp.obscurespire6277.photor.platform.web.util.SerializationUtilService;
 import com.herokuapp.obscurespire6277.photor.util.crypto.CryptoService;
 import com.herokuapp.obscurespire6277.photor.util.web.WebCallService;
 import jodd.petite.PetiteContainer;
@@ -34,6 +35,7 @@ public final class ServiceManager {
         CORE_SERVICES.add(Transactor.class);
 
         WEB_SERVICES.add(FacebookAuthService.class);
+        WEB_SERVICES.add(SerializationUtilService.class);
 
         WEB_CONTROLLERS.add(UserController.class);
 

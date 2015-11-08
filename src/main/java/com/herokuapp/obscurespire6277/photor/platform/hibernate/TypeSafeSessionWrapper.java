@@ -15,6 +15,10 @@ public interface TypeSafeSessionWrapper {
 
     <T extends HibernateEntity> T getOrThrow(Class<T> cla$$, Id<T> id);
 
+    public <T extends HibernateEntity> Optional<T> getByUniqueFieldValue(Class<T> cla$$, String field, Object value);
+
+    public <T> void update(T entity);
+
     Session getSession();
 
 }

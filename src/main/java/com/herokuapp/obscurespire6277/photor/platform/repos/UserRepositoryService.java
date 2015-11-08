@@ -3,11 +3,12 @@ package com.herokuapp.obscurespire6277.photor.platform.repos;
 import com.herokuapp.obscurespire6277.photor.entities.User;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
 import com.herokuapp.obscurespire6277.photor.platform.models.UserView;
-
-import java.util.Optional;
+import com.herokuapp.obscurespire6277.photor.platform.services.users.UserDoesNotExistException;
 
 public interface UserRepositoryService {
-    Optional<UserView> getUserWithId(Id<User> id);
+    Id<User> saveUserLoginAndUpdateToken(String facebookUserId, String facebookToken) throws UserDoesNotExistException;
 
-    void saveTokenToUser(Id<User> id, String longToken);
+    UserView createUserFromFacebookData(String facebookUserId, String facebookToken);
+
+    UserView getUser(Id<User> userId) throws UserDoesNotExistException;
 }

@@ -4,8 +4,6 @@ import com.herokuapp.obscurespire6277.photor.entities.User;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
 import com.herokuapp.obscurespire6277.photor.platform.models.UserView;
 import com.herokuapp.obscurespire6277.photor.platform.repos.UserRepositoryService;
-import com.herokuapp.obscurespire6277.photor.platform.web.util.ThirdPartyException;
-import com.herokuapp.obscurespire6277.photor.util.web.WebCallException;
 import jodd.petite.meta.PetiteBean;
 import jodd.petite.meta.PetiteInject;
 
@@ -21,9 +19,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserView logInUser(Id<User> id, String facebookShortToken) throws WebCallException, ThirdPartyException {
-        String longToken = _facebookAuthService.getLongTokenFromShortToken(facebookShortToken);
-        _userRepositoryService.saveTokenToUser(id, longToken);
-        return _userRepositoryService.getUserWithId(id).get();
+    public UserView logInUser(String facebookUserId, String facebookShortToken) {
+        try {
+            Id<User> userId = _userRepositoryService.saveUserLoginAndUpdateToken(facebookUserId, facebookShortToken);
+            return _userRepositoryService.getUser(userId);
+        } catch (UserDoesNotExistException e) {
+            // TODO: (wjacks) should this be moved out of an error condition?
+            return signUpUser(facebookUserId, facebookShortToken);
+        }
+    }
+
+    @Override
+    public UserView signUpUser(String facebookUserId, String facebookShortToken) {
+        // TODO: (wbjacks) fill out user data from fbook request
+        return _userRepositoryService.createUserFromFacebookData(facebookUserId, facebookShortToken);
     }
 }

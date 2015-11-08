@@ -6,7 +6,7 @@ import jodd.json.meta.JSON;
 
 import java.time.ZonedDateTime;
 
-@JSON(strict = true)
+//@JSON(strict = true)
 public class UserView {
     @JSON(name = "id")
     private Id<User> _id;
@@ -23,18 +23,20 @@ public class UserView {
     @JSON(name = "lastName")
     private String _lastName;
 
-    private UserView(Id<User> id, String handle, ZonedDateTime createdAt, String firstName,
-     String lastName) {
+    public UserView() {
+    }
+
+    private UserView(Id<User> id, String handle, ZonedDateTime createdAt) {
         _id = id;
         _handle = handle;
         _createdAt = createdAt;
-        _firstName = firstName;
-        _lastName = lastName;
     }
 
     public static UserView fromHibernateEntity(User user) {
-        return new UserView(user.getId(), user.getHandle(), user.getCreatedAt(),
-        user.getFirstName().get(), user.getLastName().get());
+        UserView userView = new UserView(user.getId(), user.getHandle(), user.getCreatedAt());
+        user.getFirstName().ifPresent(firstName -> userView.setFirstName(firstName));
+        user.getLastName().ifPresent(lastName -> userView.setLastName(lastName));
+        return userView;
     }
 
     public Id<User> getId() {

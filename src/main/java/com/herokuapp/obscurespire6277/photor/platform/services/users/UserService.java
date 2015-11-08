@@ -5,7 +5,10 @@ import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
 import com.herokuapp.obscurespire6277.photor.platform.models.UserView;
 import com.herokuapp.obscurespire6277.photor.platform.web.util.ThirdPartyException;
 import com.herokuapp.obscurespire6277.photor.util.web.WebCallException;
+import org.apache.http.auth.AuthenticationException;
 
 public interface UserService {
-    UserView logInUser(Id<User> id, String facebookShortToken) throws WebCallException, ThirdPartyException;
+    UserView logInUser(String facebookUserId, String facebookShortToken) throws AuthenticationException;
+
+    UserView signUpUser(String facebookUserId, String facebookShortToken);
 }

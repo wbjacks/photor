@@ -40,6 +40,9 @@ public class User implements HibernateEntity<User> {
     @Column(name = "facebook_long_token", nullable = true)
     private String facebookLongToken;
 
+    @Column(name = "facebook_user_id", nullable = false)
+    private String facebookUserId;
+
     @OneToMany(mappedBy = "user", cascade = PERSIST, fetch = LAZY)
     private List<LogIn> logins = new ArrayList<>();
 
@@ -126,5 +129,13 @@ public class User implements HibernateEntity<User> {
 
     public void setFacebookLongToken(String facebookLongToken) {
         this.facebookLongToken = facebookLongToken;
+    }
+
+    public String getFacebookUserId() {
+        return facebookUserId;
+    }
+
+    public void setFacebookUserId(String facebookUserId) {
+        this.facebookUserId = facebookUserId;
     }
 }

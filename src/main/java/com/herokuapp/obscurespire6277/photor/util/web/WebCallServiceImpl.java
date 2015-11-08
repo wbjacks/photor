@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @PetiteBean("webCallService")
 public class WebCallServiceImpl implements WebCallService {
     private static final Logger _logger = Logger.getLogger(WebCallService.class);
-    private static final String DEFAULT_BASE_SCHEME = "http";
+    private static final String DEFAULT_BASE_SCHEME = "https";
 
     public WebCallServiceImpl() {
     }
@@ -32,8 +32,8 @@ public class WebCallServiceImpl implements WebCallService {
         URI uri;
         try {
             uri = new URIBuilder().setScheme(DEFAULT_BASE_SCHEME).setHost(host).setPath(path)
-            .setParameters(urlParams.entrySet().stream().map(entry -> new BasicNameValuePair
-            (entry.getKey(), entry.getValue())).collect(Collectors.toList())).build();
+                .setParameters(urlParams.entrySet().stream().map(entry -> new BasicNameValuePair
+                (entry.getKey(), entry.getValue())).collect(Collectors.toList())).build();
         } catch (URISyntaxException e) {
             // TODO: (wjackson) add logging
             throw new WebCallException(String
@@ -52,9 +52,8 @@ public class WebCallServiceImpl implements WebCallService {
         InputStream inputStream = null;
         String responseContent;
         try {
-            inputStream = response.getEntity().getContent();
-            responseContent = IOUtils.toString(inputStream, response.getEntity()
-                    .getContentEncoding().getValue());
+            // TODO: (wbjacks) SEC ERROR: check encoding
+            responseContent = IOUtils.toString(response.getEntity().getContent());
         } catch (IOException e) {
             throw new WebCallException(String.format("Error executing webcall: %s", e.getMessage()));
         } finally {

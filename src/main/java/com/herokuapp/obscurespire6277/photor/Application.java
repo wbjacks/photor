@@ -22,7 +22,8 @@ public class Application {
         // Security filters
         Spark.before((request, response) -> {
             if (!ServiceManager.getBean(FacebookAuthService.class).isUserAuthenticatedWithToken
-            (request.params(":user_id"), request.params(":token"))) {
+                (request.headers("user_id"), request.headers("token")))
+            {
                 response.redirect("/login");
             }
         });
