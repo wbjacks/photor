@@ -37,7 +37,7 @@ public class User implements HibernateEntity<User> {
     @Column(name = "last_name", nullable = true)
     private String lastName;
 
-    @Column(name = "facebook_long_token", nullable = true)
+    @Column(name = "facebook_long_token", nullable = true, length = 1000)
     private String facebookLongToken;
 
     @Column(name = "facebook_user_id", nullable = false)

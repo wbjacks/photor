@@ -24,7 +24,8 @@ public class Application {
             if (!ServiceManager.getBean(FacebookAuthService.class).isUserAuthenticatedWithToken
                 (request.headers("user_id"), request.headers("token")))
             {
-                response.redirect("/login");
+                Spark.halt(403, "Authentication rejected."); // idk w/e
+
             }
         });
     }

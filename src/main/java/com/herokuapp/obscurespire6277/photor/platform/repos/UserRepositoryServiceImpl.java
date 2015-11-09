@@ -19,7 +19,7 @@ public class UserRepositoryServiceImpl implements UserRepositoryService {
     private static final Logger _logger = Logger.getLogger(UserRepositoryService.class);
     private static final String PACIFIC_TIME_ZONE_ID = "PST";
 
-    public Transactor _transactor;
+    private final Transactor _transactor;
 
     @PetiteInject
     public UserRepositoryServiceImpl(Transactor transactor) {

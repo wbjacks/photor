@@ -6,7 +6,6 @@ import jodd.json.meta.JSON;
 
 import java.time.ZonedDateTime;
 
-//@JSON(strict = true)
 public class UserView {
     @JSON(name = "id")
     private Id<User> _id;
