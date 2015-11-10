@@ -20,8 +20,22 @@ public class FacebookDebugTokenResponse {
     private boolean _isValid;
     private String _userId;
 
+    public static FacebookDebugTokenResponse buildForTestingWithAllValues(String appId, ZonedDateTime expiresAt, boolean isValid, String userId) {
+        return new FacebookDebugTokenResponse(appId, expiresAt, isValid, userId);
+    }
+
     public static Deserializer getDeserializer() {
         return new Deserializer();
+    }
+
+    private FacebookDebugTokenResponse() {
+    }
+
+    private FacebookDebugTokenResponse(String appId, ZonedDateTime expiresAt, boolean isValid, String userId) {
+        _appId = appId;
+        _expiresAt = expiresAt;
+        _isValid = isValid;
+        _userId = userId;
     }
 
     public String getAppId() {

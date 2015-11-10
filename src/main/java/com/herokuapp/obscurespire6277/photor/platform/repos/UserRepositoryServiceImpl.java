@@ -61,12 +61,12 @@ public class UserRepositoryServiceImpl implements UserRepositoryService {
     @Override
     public UserView getUser(Id<User> userId) throws UserDoesNotExistException {
         try {
-            return UserView.fromHibernateEntity(_transactor.execute(new WithReadOnlySession<User>() {
+            return _transactor.execute(new WithReadOnlySession<UserView>() {
                 @Override
-                public User run(TypeSafeSessionWrapper readOnlySession) {
-                    return readOnlySession.getOrThrow(User.class, userId);
+                public UserView run(TypeSafeSessionWrapper readOnlySession) {
+                    return UserView.fromHibernateEntity(readOnlySession.getOrThrow(User.class, userId));
                 }
-            }));
+            });
         } catch (HibernateException e) {
             throw new UserDoesNotExistException("FATAL ERROR: User for supplied ID does not exist");
         }

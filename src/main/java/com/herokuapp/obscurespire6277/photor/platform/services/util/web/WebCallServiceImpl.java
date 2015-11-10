@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @PetiteBean("webCallService")
 public class WebCallServiceImpl implements WebCallService {
     private static final Logger _logger = Logger.getLogger(WebCallService.class);
-    private static final String DEFAULT_BASE_SCHEME = "https";
+    private static final String BASE_SCHEME = "https";
 
     public WebCallServiceImpl() {
     }
@@ -31,30 +31,26 @@ public class WebCallServiceImpl implements WebCallService {
     public Optional<String> doGetRequest(String host, String path, Map<String, String> urlParams)
      throws WebCallException, ThirdPartyException {
         URI uri;
-        try {
-            uri = new URIBuilder().setScheme(DEFAULT_BASE_SCHEME).setHost(host).setPath(path)
-                .setParameters(urlParams.entrySet().stream().map(entry -> new BasicNameValuePair
-                (entry.getKey(), entry.getValue())).collect(Collectors.toList())).build();
-        } catch (URISyntaxException e) {
-            // TODO: (wjackson) add logging
-            throw new WebCallException(String
-                .format("Bad URI syntax in web call [host=%s]. [path=%s], [urlParams=%s]", host,
-                path, urlParams.entrySet().stream().map(entry -> String.format("%s:%s", entry
-                .getKey(), entry.getValue())).collect(Collectors.joining("|"))));
-        }
-
         HttpResponse response;
         try {
-            response = Request.Get(uri).execute().returnResponse();
+            uri = buildUri(host, path, urlParams);
+            getLogger().info(String.format("<Request>%s</Request>", uri.toString()));
+            response = getGetRequestRunner(uri).execute().returnResponse();
         }
         catch (IOException e) {
             throw new WebCallException(String.format("Error executing webcall: %s", e.getMessage()));
+        } catch (URISyntaxException e) {
+            throw new WebCallException(String
+                    .format("Bad URI syntax in web call [host=%s]. [path=%s], [urlParams=%s]", host,
+                            path, urlParams.entrySet().stream().map(entry -> String.format("%s:%s", entry
+                                    .getKey(), entry.getValue())).collect(Collectors.joining("|"))));
         }
         InputStream inputStream = null;
         String responseContent;
         try {
             // TODO: (wbjacks) SEC ERROR: check encoding
-            responseContent = IOUtils.toString(response.getEntity().getContent());
+            responseContent = generateStringResponse(response);
+            getLogger().info(String.format("<Response>%s</Response>", responseContent));
         } catch (IOException e) {
             throw new WebCallException(String.format("Error executing webcall: %s", e.getMessage()));
         } finally {
@@ -69,5 +65,23 @@ public class WebCallServiceImpl implements WebCallService {
         else {
             throw new ThirdPartyException(response.getStatusLine().getStatusCode(), responseContent);
         }
+    }
+
+    URI buildUri(String host, String path, Map<String, String> urlParams) throws URISyntaxException {
+        return new URIBuilder().setScheme(BASE_SCHEME).setHost(host).setPath(path)
+                .setParameters(urlParams.entrySet().stream().map(entry -> new BasicNameValuePair
+                (entry.getKey(), entry.getValue())).collect(Collectors.toList())).build();
+    }
+
+    Request getGetRequestRunner(URI uri) {
+        return Request.Get(uri);
+    }
+
+    String generateStringResponse(HttpResponse httpResponse) throws IOException {
+        return IOUtils.toString(httpResponse.getEntity().getContent());
+    }
+
+    Logger getLogger() {
+        return _logger;
     }
 }

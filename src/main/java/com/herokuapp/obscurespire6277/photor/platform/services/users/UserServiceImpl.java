@@ -31,6 +31,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserView signUpUser(String facebookUserId, String facebookShortToken) {
+        return doSignUpUser(facebookUserId, facebookShortToken);
+    }
+
+    private UserView doSignUpUser(String facebookUserId, String facebookShortToken) {
         // TODO: (wbjacks) fill out user data from fbook request
         return _userRepositoryService.createUserFromFacebookData(facebookUserId, facebookShortToken);
     }

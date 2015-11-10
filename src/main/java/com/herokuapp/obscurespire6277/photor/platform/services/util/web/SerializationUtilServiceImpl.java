@@ -19,6 +19,7 @@ public class SerializationUtilServiceImpl implements SerializationUtilService {
 
     @Override
     public <T> T parseJsonToObjectSkippingRoot(String json, String rootNode, Class<T> cla$$) {
+        // TODO: (wbjacks) check for bad json
         return _parser.fromJson(_parser.toJson(_parser.fromJson(json, Map.class).get(rootNode)), cla$$);
     }
 }
