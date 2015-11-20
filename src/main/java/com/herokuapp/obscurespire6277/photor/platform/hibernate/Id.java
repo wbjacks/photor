@@ -36,7 +36,6 @@ public class Id<T extends HibernateEntity> {
         if (this == that) {
             return true;
         }
-
         return that != null && this.getClass().equals(that.getClass()) && this._id == ((Id) that).toLong();
     }
 
@@ -49,7 +48,7 @@ public class Id<T extends HibernateEntity> {
         @Override
         public JsonElement serialize(final Id id, final Type type, final JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.add("time", new JsonPrimitive(id.toLong()));
+            jsonObject.add("id", new JsonPrimitive(id.toLong()));
             return jsonObject;
         }
     }

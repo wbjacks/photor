@@ -1,9 +1,9 @@
 package com.herokuapp.obscurespire6277.photor;
 
-import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookLongToken;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookUserId;
 import com.herokuapp.obscurespire6277.photor.platform.services.users.FacebookAuthService;
 import com.herokuapp.obscurespire6277.photor.util.ioc.ServiceManager;
-import jodd.json.JoddJson;
 import spark.Spark;
 
 public class Application {
@@ -15,17 +15,13 @@ public class Application {
         ServiceManager.registerServices();
 
         // Global configurations
-        JoddJson.deepSerialization = true;
-        JoddJson.defaultSerializers.register(Id.class, (jsonContext, value) -> jsonContext
-            .writeString(value.toString()));
 
         // Security filters
         Spark.before((request, response) -> {
             if (!ServiceManager.getBean(FacebookAuthService.class).isUserAuthenticatedWithToken
-                (request.headers("user_id"), request.headers("token")))
+                (new FacebookUserId(request.headers("user_id")), new FacebookLongToken(request.headers("token"))))
             {
                 Spark.halt(403, "Authentication rejected."); // idk w/e
-
             }
         });
     }

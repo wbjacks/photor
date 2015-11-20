@@ -51,7 +51,7 @@ public class UserRepositoryServiceImpl implements UserRepositoryService {
         return _transactor.execute(new WithSession<UserView>() {
             @Override
             public UserView run(TypeSafeSessionWrapper session) {
-                User user = new User("TESTHANDLE", ZonedDateTime.now(TimeZones.PT));
+                User user = new User("TESTHANDLE", ZonedDateTime.now(TimeZones.PT), new FacebookUserId("Foo"));
                 user.setFacebookLongToken(facebookLongToken);
                 user.setFacebookUserId(facebookUserId);
                 session.save(user);

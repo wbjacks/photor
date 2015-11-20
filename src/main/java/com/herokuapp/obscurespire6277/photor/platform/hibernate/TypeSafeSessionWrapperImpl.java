@@ -50,10 +50,4 @@ class TypeSafeSessionWrapperImpl implements TypeSafeSessionWrapper {
     public <T extends HibernateEntity> T getOrThrow(Class<T> cla$$, Id<T> id) {
         return get(cla$$, id).get();
     }
-
-    @Override
-    public Session getSession() {
-        return _session;
-    }
-
 }

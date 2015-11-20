@@ -6,7 +6,6 @@ import com.herokuapp.obscurespire6277.photor.platform.models.UserView;
 import com.herokuapp.obscurespire6277.photor.platform.services.users.UserService;
 import com.herokuapp.obscurespire6277.photor.platform.services.util.web.SerializationUtilService;
 import com.herokuapp.obscurespire6277.photor.platform.web.util.Route;
-import jodd.json.JsonSerializer;
 import jodd.petite.meta.PetiteBean;
 import jodd.petite.meta.PetiteInject;
 import spark.Spark;

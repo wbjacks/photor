@@ -42,11 +42,11 @@ public class User implements HibernateEntity<User> {
     @Column(name = "last_name", nullable = true)
     private String lastName;
 
-    @Type(type = "FacebookLongTokenType")
+    @Type(type = "com.herokuapp.obscurespire6277.photor.platform.hibernate.types.FacebookLongTokenType")
     @Column(name = "facebook_long_token", nullable = true, length = 1000)
     private FacebookLongToken facebookLongToken;
 
-    @Type(type = "FacebookUserIdType")
+    @Type(type = "com.herokuapp.obscurespire6277.photor.platform.hibernate.types.FacebookUserIdType")
     @Column(name = "facebook_user_id", nullable = false)
     private FacebookUserId facebookUserId;
 
@@ -64,9 +64,10 @@ public class User implements HibernateEntity<User> {
 
     public User() { /* hibernate */ }
 
-    public User(String handle, ZonedDateTime createdAt) {
+    public User(String handle, ZonedDateTime createdAt, FacebookUserId facebookUserId) {
         this.handle = handle;
         this.createdAt = createdAt;
+        this.facebookUserId = facebookUserId;
     }
 
     public void addLogIn(LogIn login) {
