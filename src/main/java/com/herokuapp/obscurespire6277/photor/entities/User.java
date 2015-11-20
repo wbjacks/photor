@@ -2,7 +2,11 @@ package com.herokuapp.obscurespire6277.photor.entities;
 
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.HibernateEntity;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.types.FacebookLongTokenType;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookLongToken;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookUserId;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -15,6 +19,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "users")
+@SuppressWarnings("unused")
 public class User implements HibernateEntity<User> {
 
     @javax.persistence.Id
@@ -37,6 +42,14 @@ public class User implements HibernateEntity<User> {
     @Column(name = "last_name", nullable = true)
     private String lastName;
 
+    @Type(type = "com.herokuapp.obscurespire6277.photor.platform.hibernate.types.FacebookLongTokenType")
+    @Column(name = "facebook_long_token", nullable = true, length = 1000)
+    private FacebookLongToken facebookLongToken;
+
+    @Type(type = "com.herokuapp.obscurespire6277.photor.platform.hibernate.types.FacebookUserIdType")
+    @Column(name = "facebook_user_id", nullable = false)
+    private FacebookUserId facebookUserId;
+
     @OneToMany(mappedBy = "user", cascade = PERSIST, fetch = LAZY)
     private List<LogIn> logins = new ArrayList<>();
 
@@ -51,9 +64,10 @@ public class User implements HibernateEntity<User> {
 
     public User() { /* hibernate */ }
 
-    public User(String handle, ZonedDateTime createdAt) {
+    public User(String handle, ZonedDateTime createdAt, FacebookUserId facebookUserId) {
         this.handle = handle;
         this.createdAt = createdAt;
+        this.facebookUserId = facebookUserId;
     }
 
     public void addLogIn(LogIn login) {
@@ -117,4 +131,19 @@ public class User implements HibernateEntity<User> {
         this.handle = newHandle;
     }
 
+    public Optional<FacebookLongToken> getFacebookLongToken() {
+        return Optional.of(facebookLongToken);
+    }
+
+    public void setFacebookLongToken(FacebookLongToken facebookLongToken) {
+        this.facebookLongToken = facebookLongToken;
+    }
+
+    public FacebookUserId getFacebookUserId() {
+        return facebookUserId;
+    }
+
+    public void setFacebookUserId(FacebookUserId facebookUserId) {
+        this.facebookUserId = facebookUserId;
+    }
 }

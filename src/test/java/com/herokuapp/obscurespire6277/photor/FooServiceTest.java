@@ -1,10 +1,12 @@
 package com.herokuapp.obscurespire6277.photor;
 
 import org.jmock.Expectations;
+import org.junit.After;
 import org.junit.Test;
 import org.jmock.Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 
+import java.util.EnumSet;
 
 import static org.junit.Assert.*;
 

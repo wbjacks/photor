@@ -5,6 +5,8 @@ import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.TypeSafeSessionWrapper;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.WithSession;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.WithVoidReadOnlySession;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookUserId;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.ZonedDateTime;
@@ -16,7 +18,7 @@ public class UserTest extends PersistentTestBase {
 
     @Test
     public void testPersistence() {
-        User user = new User("amith", ZonedDateTime.now(ET));
+        User user = new User("amith", ZonedDateTime.now(ET), new FacebookUserId("foo"));
         Id<User> userId = _transactor.execute(new WithSession<Id<User>>() {
             @Override
             public Id<User> run(TypeSafeSessionWrapper session) {
@@ -31,5 +33,4 @@ public class UserTest extends PersistentTestBase {
             }
         });
     }
-
 }
