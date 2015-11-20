@@ -58,6 +58,7 @@ public final class ServiceManager {
         forceControllerWiring();
     }
 
+    // TODO: (wbjacks) reflection pls
     private static Class getImplementationForInterface(Class interfaceClass) {
         try {
             return Class.forName(interfaceClass.getName() + IMPLEMENTATION_SUFFIX);

@@ -1,6 +1,8 @@
 package com.herokuapp.obscurespire6277.photor.platform.services.users;
 
 import com.herokuapp.obscurespire6277.photor.platform.models.FacebookDebugTokenResponse;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookLongToken;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookUserId;
 import com.herokuapp.obscurespire6277.photor.platform.services.util.crypto.CryptoService;
 import com.herokuapp.obscurespire6277.photor.platform.services.util.web.SerializationUtilService;
 import com.herokuapp.obscurespire6277.photor.platform.services.util.web.WebCallService;
@@ -15,11 +17,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class FacebookAuthServiceImplTest {
-    private static final String USER_ID = "happyLeeland";
+    private static final FacebookUserId USER_ID = new FacebookUserId("happyLeeland");
 
     @Test
     public void testIsUserAuthenticatedWithTokenPassesForSuccessfulResponseFromFacebook() throws WebCallException {
-        FacebookDebugTokenResponse facebookDebugTokenResponse = FacebookDebugTokenResponse.buildForTestingWithAllValues(FacebookAuthServiceImpl.FACEBOOK_APP_ID, null, true, USER_ID);
+        FacebookDebugTokenResponse facebookDebugTokenResponse = FacebookDebugTokenResponse
+            .buildForTestingWithAllValues(FacebookAuthServiceImpl.FACEBOOK_APP_ID, null, true, USER_ID);
 
         CryptoService cryptoService = createStrictMock(CryptoService.class);
         expect(cryptoService.getEnvironmentVariableValue(FacebookAuthServiceImpl.FACEBOOK_APP_SECRET)).andReturn("").once();
@@ -34,7 +37,8 @@ public class FacebookAuthServiceImplTest {
 
         replay(cryptoService, webCallService, serializationUtilService);
 
-        assertTrue(new Builder().with(cryptoService).with(webCallService).with(serializationUtilService).build().isUserAuthenticatedWithToken(USER_ID, ""));
+        assertTrue(new Builder().with(cryptoService).with(webCallService).with(serializationUtilService)
+            .build().isUserAuthenticatedWithToken(USER_ID, new FacebookLongToken("")));
         verify(cryptoService, webCallService, serializationUtilService);
     }
 
@@ -49,7 +53,8 @@ public class FacebookAuthServiceImplTest {
 
         replay(cryptoService, webCallService);
 
-        assertFalse(new Builder().with(cryptoService).with(webCallService).build().isUserAuthenticatedWithToken(USER_ID, ""));
+        assertFalse(new Builder().with(cryptoService).with(webCallService).build()
+            .isUserAuthenticatedWithToken(USER_ID, new FacebookLongToken("")));
         verify(cryptoService, webCallService);
     }
 

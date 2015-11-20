@@ -2,6 +2,8 @@ package com.herokuapp.obscurespire6277.photor.platform.services.users;
 
 import com.herokuapp.obscurespire6277.photor.entities.User;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookLongToken;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookUserId;
 import com.herokuapp.obscurespire6277.photor.platform.models.UserView;
 import com.herokuapp.obscurespire6277.photor.platform.repos.UserRepositoryService;
 import org.junit.Test;
@@ -10,8 +12,8 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 public class UserServiceImplTest {
-    private static final String FACEBOOK_ID = "id1";
-    private static final String SHORT_TOKEN = "shortToken";
+    private static final FacebookUserId FACEBOOK_ID = new FacebookUserId("id1");
+    private static final FacebookLongToken SHORT_TOKEN = new FacebookLongToken("shortToken");
 
     @Test
     public void testLogInUserTriesToSignUpUserIfFacebookUserIdIsNotInDatabase() throws UserDoesNotExistException {
@@ -28,7 +30,7 @@ public class UserServiceImplTest {
     @Test
     public void testLogInUserReturnsUserWhenPresentInDatabase() throws UserDoesNotExistException {
         Id<User> userId = Id.of(1);
-        UserView userView = new UserView();
+        UserView userView = UserView.emptyUserView();
 
         UserRepositoryService userRepositoryService = createStrictMock(UserRepositoryService.class);
         expect(userRepositoryService.saveUserLoginAndUpdateToken(FACEBOOK_ID, SHORT_TOKEN)).andReturn(userId);

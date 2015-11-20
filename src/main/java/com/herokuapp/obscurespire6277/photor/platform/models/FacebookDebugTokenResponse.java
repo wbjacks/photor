@@ -1,27 +1,23 @@
 package com.herokuapp.obscurespire6277.photor.platform.models;
 
 import com.google.gson.*;
-import org.apache.http.annotation.Immutable;
+import com.herokuapp.obscurespire6277.photor.util.Immutable;
+import com.herokuapp.obscurespire6277.photor.util.JsonEntity;
 
 import java.lang.reflect.Type;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
-// TODO: (wbjacks) move me to an inner class?
-// TODO: (wbjacks) find a new annotation?
 @Immutable
-public class FacebookDebugTokenResponse {
+public class FacebookDebugTokenResponse extends BaseJsonEntity {
     private String _appId;
     private ZonedDateTime _expiresAt;
     private boolean _isValid;
-    private String _userId;
+    private FacebookUserId _facebookUserId;
 
-    public static FacebookDebugTokenResponse buildForTestingWithAllValues(String appId, ZonedDateTime expiresAt, boolean isValid, String userId) {
-        return new FacebookDebugTokenResponse(appId, expiresAt, isValid, userId);
+    public static FacebookDebugTokenResponse buildForTestingWithAllValues(String appId, ZonedDateTime expiresAt, boolean isValid, FacebookUserId facebookUserId) {
+        return new FacebookDebugTokenResponse(appId, expiresAt, isValid, facebookUserId);
     }
 
     public static Deserializer getDeserializer() {
@@ -31,11 +27,11 @@ public class FacebookDebugTokenResponse {
     private FacebookDebugTokenResponse() {
     }
 
-    private FacebookDebugTokenResponse(String appId, ZonedDateTime expiresAt, boolean isValid, String userId) {
+    private FacebookDebugTokenResponse(String appId, ZonedDateTime expiresAt, boolean isValid, FacebookUserId facebookUserId) {
         _appId = appId;
         _expiresAt = expiresAt;
         _isValid = isValid;
-        _userId = userId;
+        _facebookUserId = facebookUserId;
     }
 
     public String getAppId() {
@@ -63,12 +59,12 @@ public class FacebookDebugTokenResponse {
         this._isValid = isValid;
     }
 
-    public String getUserId() {
-        return _userId;
+    public FacebookUserId getFacebookUserId() {
+        return _facebookUserId;
     }
 
-    private void setUserId(String _userId) {
-        this._userId = _userId;
+    private void setFacebookUserId(FacebookUserId facebookUserId) {
+        _facebookUserId = facebookUserId;
     }
 
     private static class Deserializer implements JsonDeserializer<FacebookDebugTokenResponse> {
@@ -81,7 +77,8 @@ public class FacebookDebugTokenResponse {
             facebookDebugTokenResponse.setExpiresAt(ZonedDateTime.ofInstant(
                     Instant.ofEpochSecond(jsonObject.get("expires_at").getAsLong()), ZoneId.of("PST", ZoneId.SHORT_IDS)));
             facebookDebugTokenResponse.setIsValid(jsonObject.get("is_valid").getAsBoolean());
-            facebookDebugTokenResponse.setUserId(jsonObject.get("user_id").getAsString());
+            facebookDebugTokenResponse.setFacebookUserId(new FacebookUserId(jsonObject.get
+            ("user_id").getAsString()));
             return facebookDebugTokenResponse;
         }
     }

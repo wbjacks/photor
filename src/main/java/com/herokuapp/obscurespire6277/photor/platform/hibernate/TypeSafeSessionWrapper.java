@@ -1,7 +1,5 @@
 package com.herokuapp.obscurespire6277.photor.platform.hibernate;
 
-import org.hibernate.Session;
-
 import java.util.Optional;
 
 /**
@@ -15,10 +13,8 @@ public interface TypeSafeSessionWrapper {
 
     <T extends HibernateEntity> T getOrThrow(Class<T> cla$$, Id<T> id);
 
-    public <T extends HibernateEntity> Optional<T> getByUniqueFieldValue(Class<T> cla$$, String field, Object value);
+    <T extends HibernateEntity> Optional<T> getByUniqueFieldValue(Class<T> cla$$, String field, Object value);
 
-    public <T> void update(T entity);
-
-    Session getSession();
+    <T> void update(T entity);
 
 }

@@ -2,8 +2,11 @@ package com.herokuapp.obscurespire6277.photor.platform.repos;
 
 import com.herokuapp.obscurespire6277.photor.entities.User;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.*;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookLongToken;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookUserId;
 import com.herokuapp.obscurespire6277.photor.platform.models.UserView;
 import com.herokuapp.obscurespire6277.photor.platform.services.users.UserDoesNotExistException;
+import com.herokuapp.obscurespire6277.photor.util.time.TimeZones;
 import jodd.petite.meta.PetiteBean;
 import jodd.petite.meta.PetiteInject;
 import org.apache.http.client.utils.DateUtils;
@@ -17,7 +20,6 @@ import java.util.Optional;
 @PetiteBean("userRepositoryService")
 public class UserRepositoryServiceImpl implements UserRepositoryService {
     private static final Logger _logger = Logger.getLogger(UserRepositoryService.class);
-    private static final String PACIFIC_TIME_ZONE_ID = "PST";
 
     private final Transactor _transactor;
 
@@ -27,30 +29,30 @@ public class UserRepositoryServiceImpl implements UserRepositoryService {
     }
 
     @Override
-    public Id<User> saveUserLoginAndUpdateToken(String facebookUserId, String facebookToken) throws UserDoesNotExistException {
-        Optional<Id<User>> maybeUserId = Optional.ofNullable(_transactor.execute(new WithSession<Id<User>>() {
+    public Id<User> saveUserLoginAndUpdateToken(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken) throws UserDoesNotExistException {
+        Optional<Id<User>> maybeUserId = _transactor.execute(new WithSession<Optional<Id<User>>>() {
             @Override
-            public Id<User> run(TypeSafeSessionWrapper session) {
+            public Optional<Id<User>> run(TypeSafeSessionWrapper session) {
                 Optional<User> maybeUser = session.getByUniqueFieldValue(User.class, "facebookUserId", facebookUserId);
                 if (maybeUser.isPresent()) {
-                    maybeUser.get().setFacebookLongToken(facebookToken);
+                    maybeUser.get().setFacebookLongToken(facebookLongToken);
                     session.update(maybeUser.get());
-                    return maybeUser.get().getId();
+                    return Optional.of(maybeUser.get().getId());
                 } else {
-                    return null;
+                    return Optional.empty();
                 }
             }
-        }));
+        });
         return maybeUserId.orElseThrow(() -> new UserDoesNotExistException("No user found when updating login information, user likely has not signed up."));
     }
 
     @Override
-    public UserView createUserFromFacebookData(String facebookUserId, String facebookToken) {
+    public UserView createUserFromFacebookData(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken) {
         return _transactor.execute(new WithSession<UserView>() {
             @Override
             public UserView run(TypeSafeSessionWrapper session) {
-                User user = new User("TESTHANDLE", ZonedDateTime.now(ZoneId.of(PACIFIC_TIME_ZONE_ID, ZoneId.SHORT_IDS)));
-                user.setFacebookLongToken(facebookToken);
+                User user = new User("TESTHANDLE", ZonedDateTime.now(TimeZones.PT));
+                user.setFacebookLongToken(facebookLongToken);
                 user.setFacebookUserId(facebookUserId);
                 session.save(user);
                 return UserView.fromHibernateEntity(user);

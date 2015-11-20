@@ -2,6 +2,8 @@ package com.herokuapp.obscurespire6277.photor.platform.services.users;
 
 import com.herokuapp.obscurespire6277.photor.entities.User;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookLongToken;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookUserId;
 import com.herokuapp.obscurespire6277.photor.platform.models.UserView;
 import com.herokuapp.obscurespire6277.photor.platform.repos.UserRepositoryService;
 import jodd.petite.meta.PetiteBean;
@@ -19,23 +21,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserView logInUser(String facebookUserId, String facebookShortToken) {
+    public UserView logInUser(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken) {
         try {
-            Id<User> userId = _userRepositoryService.saveUserLoginAndUpdateToken(facebookUserId, facebookShortToken);
+            Id<User> userId = _userRepositoryService.saveUserLoginAndUpdateToken(facebookUserId, facebookLongToken);
             return _userRepositoryService.getUser(userId);
         } catch (UserDoesNotExistException e) {
             // TODO: (wjacks) should this be moved out of an error condition?
-            return signUpUser(facebookUserId, facebookShortToken);
+            return signUpUser(facebookUserId, facebookLongToken);
         }
     }
 
     @Override
-    public UserView signUpUser(String facebookUserId, String facebookShortToken) {
-        return doSignUpUser(facebookUserId, facebookShortToken);
+    public UserView signUpUser(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken) {
+        return doSignUpUser(facebookUserId, facebookLongToken);
     }
 
-    private UserView doSignUpUser(String facebookUserId, String facebookShortToken) {
+    private UserView doSignUpUser(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken) {
         // TODO: (wbjacks) fill out user data from fbook request
-        return _userRepositoryService.createUserFromFacebookData(facebookUserId, facebookShortToken);
+        return _userRepositoryService.createUserFromFacebookData(facebookUserId, facebookLongToken);
     }
 }

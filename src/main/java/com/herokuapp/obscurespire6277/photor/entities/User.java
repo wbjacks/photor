@@ -2,7 +2,11 @@ package com.herokuapp.obscurespire6277.photor.entities;
 
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.HibernateEntity;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
+import com.herokuapp.obscurespire6277.photor.platform.hibernate.types.FacebookLongTokenType;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookLongToken;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookUserId;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -15,6 +19,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "users")
+@SuppressWarnings("unused")
 public class User implements HibernateEntity<User> {
 
     @javax.persistence.Id
@@ -37,11 +42,13 @@ public class User implements HibernateEntity<User> {
     @Column(name = "last_name", nullable = true)
     private String lastName;
 
+    @Type(type = "FacebookLongTokenType")
     @Column(name = "facebook_long_token", nullable = true, length = 1000)
-    private String facebookLongToken;
+    private FacebookLongToken facebookLongToken;
 
+    @Type(type = "FacebookUserIdType")
     @Column(name = "facebook_user_id", nullable = false)
-    private String facebookUserId;
+    private FacebookUserId facebookUserId;
 
     @OneToMany(mappedBy = "user", cascade = PERSIST, fetch = LAZY)
     private List<LogIn> logins = new ArrayList<>();
@@ -123,19 +130,19 @@ public class User implements HibernateEntity<User> {
         this.handle = newHandle;
     }
 
-    public Optional<String> getFacebookLongToken() {
+    public Optional<FacebookLongToken> getFacebookLongToken() {
         return Optional.of(facebookLongToken);
     }
 
-    public void setFacebookLongToken(String facebookLongToken) {
+    public void setFacebookLongToken(FacebookLongToken facebookLongToken) {
         this.facebookLongToken = facebookLongToken;
     }
 
-    public String getFacebookUserId() {
+    public FacebookUserId getFacebookUserId() {
         return facebookUserId;
     }
 
-    public void setFacebookUserId(String facebookUserId) {
+    public void setFacebookUserId(FacebookUserId facebookUserId) {
         this.facebookUserId = facebookUserId;
     }
 }
