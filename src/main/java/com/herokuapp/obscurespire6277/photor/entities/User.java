@@ -2,7 +2,6 @@ package com.herokuapp.obscurespire6277.photor.entities;
 
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.HibernateEntity;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
-import com.herokuapp.obscurespire6277.photor.platform.hibernate.types.FacebookLongTokenType;
 import com.herokuapp.obscurespire6277.photor.platform.models.FacebookLongToken;
 import com.herokuapp.obscurespire6277.photor.platform.models.FacebookUserId;
 import org.hibernate.annotations.GenericGenerator;
@@ -50,8 +49,10 @@ public class User implements HibernateEntity<User> {
     @Column(name = "facebook_user_id", nullable = false)
     private FacebookUserId facebookUserId;
 
+/* TODO: Amith
     @OneToMany(mappedBy = "user", cascade = PERSIST, fetch = LAZY)
     private List<LogIn> logins = new ArrayList<>();
+*/
 
     @OneToMany(mappedBy = "user", cascade = PERSIST, fetch = LAZY)
     private List<Photo> photos = new ArrayList<>();
@@ -70,10 +71,12 @@ public class User implements HibernateEntity<User> {
         this.facebookUserId = facebookUserId;
     }
 
+    /*
     public void addLogIn(LogIn login) {
         this.logins.add(login);
         login.setUser(this);
     }
+    */
 
     public void addPhoto(Photo photo) {
         this.photos.add(photo);
@@ -109,10 +112,6 @@ public class User implements HibernateEntity<User> {
 
     public Optional<String> getLastName() {
         return Optional.ofNullable(lastName);
-    }
-
-    public List<LogIn> getLogins() {
-        return logins;
     }
 
     public List<Photo> getPhotos() {

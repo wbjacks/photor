@@ -40,13 +40,10 @@ public class Photo implements HibernateEntity<Photo> {
 
     @Column(name = "caption", nullable = true)
     private String caption;
-
-    @Column(name = "photo_blob", nullable = false)
-    private Blob photoBlob;
-
-    @OneToOne
+/* TODO: Amith
+    @OneToOne(optional = true)
     private LogIn login;
-
+*/
     @OneToMany(mappedBy = "photo", cascade = PERSIST, fetch = EAGER)
     private List<Like> likes = new ArrayList<>();
 
@@ -56,11 +53,9 @@ public class Photo implements HibernateEntity<Photo> {
 
     public Photo() { /* hibernate */ }
 
-    public Photo(ZonedDateTime createdAt, String caption, Blob photoBlob, LogIn login) {
+    public Photo(ZonedDateTime createdAt, String caption) {
         this.createdAt = createdAt;
         this.caption = caption;
-        this.photoBlob = photoBlob;
-        this.login = login;
     }
 
     /* for use by User#addPhoto and tests ONLY */
@@ -101,14 +96,6 @@ public class Photo implements HibernateEntity<Photo> {
 
     public Optional<String> getCaption() {
         return Optional.ofNullable(caption);
-    }
-
-    public Blob getPhotoBlob() {
-        return photoBlob;
-    }
-
-    public LogIn getLogin() {
-        return login;
     }
 
     public List<Like> getLikes() {

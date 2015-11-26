@@ -25,8 +25,10 @@ public class Comment implements HibernateEntity<Comment> {
     @Column(name = "content")
     private String content;
 
+/* TODO: Amith
     @OneToOne
     private LogIn login;
+*/
 
     @ManyToOne
     private User user;
@@ -36,10 +38,9 @@ public class Comment implements HibernateEntity<Comment> {
 
     public Comment() { /* hibernate */ }
 
-    public Comment(ZonedDateTime createdAt, String content, LogIn login) {
+    public Comment(ZonedDateTime createdAt, String content) {
         this.createdAt = createdAt;
         this.content = content;
-        this.login = login;
     }
 
     // for use by User#addComment and tests ONLY
@@ -59,10 +60,6 @@ public class Comment implements HibernateEntity<Comment> {
 
     public ZonedDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public LogIn getLogin() {
-        return login;
     }
 
     public User getUser() {
