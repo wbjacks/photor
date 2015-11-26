@@ -29,15 +29,19 @@ public class LogIn implements HibernateEntity<LogIn> {
     @Column(name = "latitude", nullable = true)
     private double latitude;
 
+/* TODO: Amith
     @ManyToOne
     private User user;
+*/
 
     public LogIn() { /* hibernate */ }
 
+/*
     // for use by User#addLogIn and tests ONLY
     public void setUser(User user) {
         this.user = user;
     }
+*/
 
     @Override
     public Id<LogIn> getId() {
@@ -54,10 +58,6 @@ public class LogIn implements HibernateEntity<LogIn> {
 
     public Optional<Double> getLatitude() {
         return Optional.ofNullable(latitude);
-    }
-
-    public User getUser() {
-        return user;
     }
 
 }

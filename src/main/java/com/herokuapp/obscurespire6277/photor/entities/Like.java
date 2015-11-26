@@ -22,8 +22,10 @@ public class Like implements HibernateEntity<Like> {
     @Column(name = "created_at", nullable = false)
     private ZonedDateTime createdAt;
 
+/* TODO: Amith
     @OneToOne
     private LogIn login;
+*/
 
     @ManyToOne
     private User user;
@@ -33,9 +35,8 @@ public class Like implements HibernateEntity<Like> {
 
     public Like() { /* hibernate */ }
 
-    public Like(ZonedDateTime createdAt, LogIn login) {
+    public Like(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
-        this.login = login;
     }
 
     // for use by User#addLike and tests ONLY
@@ -55,10 +56,6 @@ public class Like implements HibernateEntity<Like> {
 
     public ZonedDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public LogIn getLogin() {
-        return login;
     }
 
     public User getUser() {
