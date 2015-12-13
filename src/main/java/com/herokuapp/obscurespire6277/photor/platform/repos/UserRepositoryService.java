@@ -10,7 +10,11 @@ import com.herokuapp.obscurespire6277.photor.platform.services.users.UserDoesNot
 public interface UserRepositoryService {
     Id<User> saveUserLoginAndUpdateToken(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken) throws UserDoesNotExistException;
 
-    UserView createUserFromFacebookData(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken);
+    UserView createUserFromFacebookData(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken, String handle);
 
     UserView getUser(Id<User> userId) throws UserDoesNotExistException;
+
+    boolean isUserSignedUp(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken);
+
+    boolean isHandleAvailable(String handle);
 }

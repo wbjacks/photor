@@ -9,11 +9,9 @@ import com.herokuapp.obscurespire6277.photor.platform.services.users.UserDoesNot
 import com.herokuapp.obscurespire6277.photor.util.time.TimeZones;
 import jodd.petite.meta.PetiteBean;
 import jodd.petite.meta.PetiteInject;
-import org.apache.http.client.utils.DateUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 
@@ -47,13 +45,12 @@ public class UserRepositoryServiceImpl implements UserRepositoryService {
     }
 
     @Override
-    public UserView createUserFromFacebookData(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken) {
+    public UserView createUserFromFacebookData(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken, String handle) {
         return _transactor.execute(new WithSession<UserView>() {
             @Override
             public UserView run(TypeSafeSessionWrapper session) {
-                User user = new User("TESTHANDLE", ZonedDateTime.now(TimeZones.PT), new FacebookUserId("Foo"));
+                User user = new User(handle, ZonedDateTime.now(TimeZones.PT), facebookUserId);
                 user.setFacebookLongToken(facebookLongToken);
-                user.setFacebookUserId(facebookUserId);
                 session.save(user);
                 return UserView.fromHibernateEntity(user);
             }
@@ -72,5 +69,25 @@ public class UserRepositoryServiceImpl implements UserRepositoryService {
         } catch (HibernateException e) {
             throw new UserDoesNotExistException("FATAL ERROR: User for supplied ID does not exist");
         }
+    }
+
+    @Override
+    public boolean isUserSignedUp(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken) {
+        return _transactor.execute(new WithReadOnlySession<Boolean>() {
+            @Override
+            public Boolean run(TypeSafeSessionWrapper readOnlySession) {
+                return readOnlySession.getByUniqueFieldValue(User.class, "facebookUserId", facebookUserId.getId()).isPresent();
+            }
+        });
+    }
+
+    @Override
+    public boolean isHandleAvailable(String handle) {
+        return _transactor.execute(new WithReadOnlySession<Boolean>() {
+            @Override
+            public Boolean run(TypeSafeSessionWrapper readOnlySession) {
+                return !readOnlySession.getByUniqueFieldValue(User.class, "handle", handle).isPresent();
+            }
+        });
     }
 }

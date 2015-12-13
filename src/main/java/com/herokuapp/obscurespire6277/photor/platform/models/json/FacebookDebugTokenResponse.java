@@ -1,8 +1,9 @@
-package com.herokuapp.obscurespire6277.photor.platform.models;
+package com.herokuapp.obscurespire6277.photor.platform.models.json;
 
 import com.google.gson.*;
+import com.herokuapp.obscurespire6277.photor.platform.models.BaseJsonEntity;
+import com.herokuapp.obscurespire6277.photor.platform.models.FacebookUserId;
 import com.herokuapp.obscurespire6277.photor.util.Immutable;
-import com.herokuapp.obscurespire6277.photor.util.JsonEntity;
 
 import java.lang.reflect.Type;
 import java.time.Instant;
@@ -39,7 +40,7 @@ public class FacebookDebugTokenResponse extends BaseJsonEntity {
     }
 
     private void setAppId(String appId) {
-        this._appId = appId;
+        _appId = appId;
     }
 
     // ZonedDateTime is immutable
@@ -47,8 +48,8 @@ public class FacebookDebugTokenResponse extends BaseJsonEntity {
         return _expiresAt;
     }
 
-    private void setExpiresAt(ZonedDateTime _expiresAt) {
-        this._expiresAt = _expiresAt;
+    private void setExpiresAt(ZonedDateTime expiresAt) {
+        _expiresAt = expiresAt;
     }
 
     public boolean isValid() {
@@ -56,7 +57,7 @@ public class FacebookDebugTokenResponse extends BaseJsonEntity {
     }
 
     private void setIsValid(boolean isValid) {
-        this._isValid = isValid;
+        _isValid = isValid;
     }
 
     public FacebookUserId getFacebookUserId() {
@@ -78,7 +79,7 @@ public class FacebookDebugTokenResponse extends BaseJsonEntity {
                     Instant.ofEpochSecond(jsonObject.get("expires_at").getAsLong()), ZoneId.of("PST", ZoneId.SHORT_IDS)));
             facebookDebugTokenResponse.setIsValid(jsonObject.get("is_valid").getAsBoolean());
             facebookDebugTokenResponse.setFacebookUserId(new FacebookUserId(jsonObject.get
-            ("user_id").getAsString()));
+                    ("user_id").getAsString()));
             return facebookDebugTokenResponse;
         }
     }

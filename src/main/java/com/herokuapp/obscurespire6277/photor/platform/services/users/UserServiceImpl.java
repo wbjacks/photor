@@ -11,33 +11,37 @@ import jodd.petite.meta.PetiteInject;
 
 @PetiteBean("userService")
 public class UserServiceImpl implements UserService {
-    private final FacebookAuthService _facebookAuthService;
     private final UserRepositoryService _userRepositoryService;
 
     @PetiteInject
-    public UserServiceImpl(FacebookAuthService facebookAuthService, UserRepositoryService userRepositoryService) {
-        _facebookAuthService = facebookAuthService;
+    public UserServiceImpl(UserRepositoryService userRepositoryService) {
         _userRepositoryService = userRepositoryService;
     }
 
     @Override
-    public UserView logInUser(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken) {
-        try {
-            Id<User> userId = _userRepositoryService.saveUserLoginAndUpdateToken(facebookUserId, facebookLongToken);
-            return _userRepositoryService.getUser(userId);
-        } catch (UserDoesNotExistException e) {
-            // TODO: (wjacks) should this be moved out of an error condition?
-            return signUpUser(facebookUserId, facebookLongToken);
+    public UserView logInUser(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken) throws UserDoesNotExistException {
+        Id<User> userId = _userRepositoryService.saveUserLoginAndUpdateToken(facebookUserId, facebookLongToken);
+        return _userRepositoryService.getUser(userId);
+    }
+
+    @Override
+    public UserView signUpUser(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken, String handle) throws UserHandleIsNotAvailableException {
+        if (isHandleAvailable(handle)) {
+            // TODO: (wbjacks) fill out user data from fbook request
+            return _userRepositoryService.createUserFromFacebookData(facebookUserId, facebookLongToken, handle);
+        }
+        else {
+            throw new UserHandleIsNotAvailableException(String.format("Sign in attempt for existing user handle [%s].", handle));
         }
     }
 
     @Override
-    public UserView signUpUser(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken) {
-        return doSignUpUser(facebookUserId, facebookLongToken);
+    public boolean isUserSignedUp(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken) {
+        return _userRepositoryService.isUserSignedUp(facebookUserId, facebookLongToken);
     }
 
-    private UserView doSignUpUser(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken) {
-        // TODO: (wbjacks) fill out user data from fbook request
-        return _userRepositoryService.createUserFromFacebookData(facebookUserId, facebookLongToken);
+    @Override
+    public boolean isHandleAvailable(String handle) {
+        return _userRepositoryService.isHandleAvailable(handle);
     }
 }
