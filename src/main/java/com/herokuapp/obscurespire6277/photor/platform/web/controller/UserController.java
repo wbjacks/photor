@@ -10,6 +10,8 @@ import com.herokuapp.obscurespire6277.photor.platform.services.util.web.Serializ
 import com.herokuapp.obscurespire6277.photor.platform.web.util.Route;
 import jodd.petite.meta.PetiteBean;
 import jodd.petite.meta.PetiteInject;
+import spark.Request;
+import spark.Response;
 import spark.Spark;
 
 @PetiteBean
@@ -26,19 +28,21 @@ public class UserController extends BaseController {
 
     @Route
     @SuppressWarnings("unused")
-    public void logInUser() {
-        Spark.post("/loginUser", ((request, response) -> {
-            UserRequest userRequest = deserializeUserRequest(request.body());
-            response.type(JSON_MIME_TYPE);
-            try {
-                UserView userView = _userService.logInUser(userRequest.getFacebookUserId().get(), userRequest.getFacebookLongToken().get());
-                return _serializationUtilService.serializeObjectToJson(userView);
-            }
-            catch (UserDoesNotExistException e) {
-                response.status(401);
-                return "User not found.";
-            }
-        }));
+    public void logInUserRoute() {
+        Spark.post("/loginUser", this::logInUser);
+    }
+
+    String logInUser(Request request, Response response) {
+        UserRequest userRequest = deserializeUserRequest(request.body());
+        response.type(JSON_MIME_TYPE);
+        try {
+            UserView userView = _userService.logInUser(userRequest.getFacebookUserId().get(), userRequest.getFacebookLongToken().get());
+            return _serializationUtilService.serializeObjectToJson(userView);
+        }
+        catch (UserDoesNotExistException e) {
+            response.status(401);
+            return "User not found.";
+        }
     }
 
     @Route

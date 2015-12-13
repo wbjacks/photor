@@ -25,6 +25,12 @@ public class UserRequest extends BaseJsonEntity {
     private UserRequest() {
     }
 
+    public UserRequest(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken, String handle) {
+        _facebookLongToken = facebookLongToken;
+        _facebookUserId = facebookUserId;
+        _handle = handle;
+    }
+
     public Optional<FacebookUserId> getFacebookUserId() {
         return Optional.ofNullable(_facebookUserId);
     }
