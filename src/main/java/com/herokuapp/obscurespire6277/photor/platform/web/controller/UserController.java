@@ -4,6 +4,7 @@ import com.herokuapp.obscurespire6277.photor.platform.models.FacebookLongToken;
 import com.herokuapp.obscurespire6277.photor.platform.models.FacebookUserId;
 import com.herokuapp.obscurespire6277.photor.platform.models.UserView;
 import com.herokuapp.obscurespire6277.photor.platform.models.json.UserRequest;
+import com.herokuapp.obscurespire6277.photor.platform.services.users.UserDoesNotExistException;
 import com.herokuapp.obscurespire6277.photor.platform.services.users.UserService;
 import com.herokuapp.obscurespire6277.photor.platform.services.util.web.SerializationUtilService;
 import com.herokuapp.obscurespire6277.photor.platform.web.util.Route;
@@ -28,9 +29,15 @@ public class UserController extends BaseController {
     public void logInUser() {
         Spark.post("/loginUser", ((request, response) -> {
             UserRequest userRequest = deserializeUserRequest(request.body());
-            UserView userView = _userService.logInUser(userRequest.getFacebookUserId().get(), userRequest.getFacebookLongToken().get());
             response.type(JSON_MIME_TYPE);
-            return _serializationUtilService.serializeObjectToJson(userView);
+            try {
+                UserView userView = _userService.logInUser(userRequest.getFacebookUserId().get(), userRequest.getFacebookLongToken().get());
+                return _serializationUtilService.serializeObjectToJson(userView);
+            }
+            catch (UserDoesNotExistException e) {
+                response.status(401);
+                return "User not found.";
+            }
         }));
     }
 

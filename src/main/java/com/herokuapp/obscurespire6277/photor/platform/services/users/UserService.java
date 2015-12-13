@@ -6,7 +6,7 @@ import com.herokuapp.obscurespire6277.photor.platform.models.UserView;
 import org.apache.http.auth.AuthenticationException;
 
 public interface UserService {
-    UserView logInUser(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken) throws AuthenticationException;
+    UserView logInUser(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken) throws UserDoesNotExistException;
 
     UserView signUpUser(FacebookUserId facebookUserId, FacebookLongToken facebookLongToken, String handle) throws UserHandleIsNotAvailableException;
 
