@@ -1,6 +1,6 @@
 package com.herokuapp.obscurespire6277.photor.platform.services.users;
 
-import com.herokuapp.obscurespire6277.photor.platform.models.FacebookDebugTokenResponse;
+import com.herokuapp.obscurespire6277.photor.platform.models.json.FacebookDebugTokenResponse;
 import com.herokuapp.obscurespire6277.photor.platform.models.FacebookLongToken;
 import com.herokuapp.obscurespire6277.photor.platform.models.FacebookUserId;
 import com.herokuapp.obscurespire6277.photor.platform.services.util.crypto.CryptoService;

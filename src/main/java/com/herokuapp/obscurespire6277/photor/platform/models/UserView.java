@@ -1,9 +1,12 @@
 package com.herokuapp.obscurespire6277.photor.platform.models;
 
+import com.google.gson.*;
 import com.herokuapp.obscurespire6277.photor.entities.User;
 import com.herokuapp.obscurespire6277.photor.platform.hibernate.Id;
 import com.herokuapp.obscurespire6277.photor.util.Immutable;
 import com.herokuapp.obscurespire6277.photor.util.JsonEntity;
+
+import java.lang.reflect.Type;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 
@@ -30,6 +33,10 @@ public class UserView extends BaseJsonEntity {
         user.getFirstName().ifPresent(firstName -> userView.setFirstName(firstName));
         user.getLastName().ifPresent(lastName -> userView.setLastName(lastName));
         return userView;
+    }
+
+    public static Serializer getSerializer() {
+        return new Serializer();
     }
 
     public static UserView emptyUserView() {
@@ -79,4 +86,16 @@ public class UserView extends BaseJsonEntity {
     //private List<Photo> photos = new ArrayList<>();
     //private List<Like> likes = new ArrayList<>();
     //private List<Comment> comments = new ArrayList<>();
+
+    private static class Serializer implements JsonSerializer<UserView> {
+        @Override
+        public JsonElement serialize(UserView userView, Type typeOfSrc, JsonSerializationContext context) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.add("id", new JsonPrimitive(userView.getId().toLong()));
+            jsonObject.add("handle", new JsonPrimitive(userView.getHandle()));
+            userView.getFirstName().ifPresent(firstName -> jsonObject.add("firstName", new JsonPrimitive(firstName)));
+            userView.getLastName().ifPresent(lastName -> jsonObject.add("lastName", new JsonPrimitive(lastName)));
+            return jsonObject;
+        }
+    }
 }
